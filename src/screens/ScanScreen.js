@@ -1,14 +1,117 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Camera } from 'expo-camera'
+import CameraPreview from '../components/CameraPreview'
+import Clarifai, { FOOD_MODEL } from 'clarifai'
 
 const ScanScreen = () => {
+  const [hasPermission, setHasPermission] = useState(null)
+  const [previewVisible, setPreviewVisible] = React.useState(false)
+  const [capturedImage, setCapturedImage] = React.useState(null)
+  const cameraRef = useRef(null)
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync()
+      setHasPermission(status === 'granted')
+    })()
+  }, [])
+
+  if (hasPermission === null) {
+    return <View />
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>
+  }
+  const takePicture = async () => {
+    if (cameraRef) {
+      const photo = await cameraRef.current.takePictureAsync({
+        base64: true
+      })
+      setPreviewVisible(true)
+      setCapturedImage(photo)
+    }
+  }
+  const savePhoto = async () => {
+    const ClarifaiApp = new Clarifai.App({
+      apiKey: '3c94a001482f46109f6a586f7b324d4e'
+    })
+    try {
+      const response = await ClarifaiApp.models.predict(FOOD_MODEL, {
+        base64: capturedImage.base64
+      })
+      const { name } = response.outputs[0].data.concepts[0]
+      if (name) {
+        const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
+        if (response.ok) {
+          const data = await response.json()
+          console.log(data)
+        } else {
+          throw response
+        }
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const retakePicture = () => {
+    setCapturedImage(null)
+    setPreviewVisible(false)
+  }
   return (
-    <View>
-      <Text>ScanScreen</Text>
+    <View style={styles.container}>
+      { previewVisible && capturedImage  
+        ? <CameraPreview 
+            photo={capturedImage}
+            savePhoto={savePhoto}
+            retakePicture={retakePicture}/>
+        : (
+            <Camera 
+              style={styles.camera}
+              type={Camera.Constants.Type.back}
+              ref={cameraRef}>
+              <View style={styles.buttonContainer}>
+                <View style={styles.button}>
+                  <TouchableOpacity
+                    onPress={takePicture}
+                    style={styles.buttonRadius}/>
+                </View>
+              </View>
+            </Camera>
+          )
+      }
     </View>
   )
 }
 
 export default ScanScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  camera: {
+    flex: 1,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
+    flex: 1,
+    width: '100%',
+    padding: 20,
+    justifyContent: 'space-between'
+  },
+  button: {
+    alignSelf: 'center',
+    flex: 1,
+    alignItems: 'center'
+    },
+  buttonRadius: {
+    width: 70,
+    height: 70,
+    bottom: 0,
+    borderRadius: 50,
+    backgroundColor: '#fff'
+  }
+})
