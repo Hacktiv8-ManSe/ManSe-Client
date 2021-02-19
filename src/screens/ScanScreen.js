@@ -37,17 +37,18 @@ const ScanScreen = () => {
       apiKey: '3c94a001482f46109f6a586f7b324d4e'
     })
     try {
-      const response = await ClarifaiApp.models.predict(FOOD_MODEL, {
+      const responses = await ClarifaiApp.models.predict(FOOD_MODEL, {
         base64: capturedImage.base64
       })
-      const { name } = response.outputs[0].data.concepts[0]
+      const { name } = responses.outputs[0].data.concepts[0]
+      console.log(name, '<<<< food name')
       if (name) {
-        const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
-        if (response.ok) {
-          const data = await response.json()
+        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
+        if (responses.ok) {
+          const data = await responses.json()
           console.log(data)
         } else {
-          throw response
+          throw responses
         }
       }
     } catch (error) {
