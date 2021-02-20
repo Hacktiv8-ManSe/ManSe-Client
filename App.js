@@ -1,10 +1,12 @@
 import React from 'react';
 import BottomNavigator from './src/routes/BottomNavigator'
-import HomeScreen from './src/screens/HomeScreen'
+import store from './src/store'
+import { Provider } from 'react-redux'
 
 export default function App() {
   return (
-    <BottomNavigator />
-    // <HomeScreen/>
+    <Provider store={store}>
+      <BottomNavigator />
+    </Provider>
   );
 }

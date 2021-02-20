@@ -1,35 +1,56 @@
-import React, { Component } from "react";
-import { StyleSheet, View, StatusBar, ScrollView } from "react-native";
-import CardBody from "../components/CardBody";
-import Headers from "../components/Headers";
+// import React, { Component } from "react";
+// import { StyleSheet, View, StatusBar, ScrollView } from "react-native";
+// import CardBody from "../components/CardBody";
+// import Headers from "../components/Headers";
 
-function HomeScreen(props) {
+// function HomeScreen(props) {
+//   return (
+//     <View style={styles.container}>
+//       <StatusBar
+//         hidden
+//         barStyle="light-content"
+//         backgroundColor="rgba(0,0,0,1)"
+//       />
+//       <Headers style={styles.Headers}></Headers>
+//       <View style={styles.scrollArea}>
+//         <ScrollView
+//           horizontal={false}
+//         >
+//           <CardBody
+//             style={styles.CardBody}
+//           ></CardBody>
+//           <CardBody
+//             style={styles.CardBody}
+//           ></CardBody>
+//           <CardBody
+//             style={styles.CardBody}
+//           ></CardBody>
+//           <CardBody
+//             style={styles.CardBody}
+//           ></CardBody>
+//         </ScrollView>
+//       </View>
+// =======
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import { fetchRecipes } from '../store/actions/recipeAction'
+import { useDispatch, useSelector } from 'react-redux'
+
+const HomeScreen = () => {
+  const dispatch = useDispatch()
+  dispatch(fetchRecipes())
+  const { recipe } = useSelector(state => state)
   return (
-    <View style={styles.container}>
-      <StatusBar
-        hidden
-        barStyle="light-content"
-        backgroundColor="rgba(0,0,0,1)"
-      />
-      <Headers style={styles.Headers}></Headers>
-      <View style={styles.scrollArea}>
-        <ScrollView
-          horizontal={false}
-        >
-          <CardBody
-            style={styles.CardBody}
-          ></CardBody>
-          <CardBody
-            style={styles.CardBody}
-          ></CardBody>
-          <CardBody
-            style={styles.CardBody}
-          ></CardBody>
-          <CardBody
-            style={styles.CardBody}
-          ></CardBody>
-        </ScrollView>
-      </View>
+    <View style={{
+      flex:1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
+      {
+        recipe.recipes?.map(el => {
+          return <Text key={el.id}>{ el.title }</Text>
+        })
+      }
     </View>
   );
 }
