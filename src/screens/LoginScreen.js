@@ -1,82 +1,110 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Image,
+  ImageBackground,
+  Text,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
+import SubmitButton from "../components/SubmitButton";
 
-const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+function LoginScreen(props) {
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("")
 
   return (
-		<View style={styles.container}>
-        <Text style={styles.logo}>Login</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="Email..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => setEmail(text)}/>
+    <View style={styles.container}>
+      <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
+      <ImageBackground
+        source={require("../../assets/images/potrait2.jpg")}
+        resizeMode="contain"
+        style={styles.image}
+        imageStyle={styles.image_imageStyle}
+      >
+        <View style={styles.group3}>
+          <Text style={styles.login}>Login</Text>
+          <TextInput
+            placeholder=" Email"
+            textBreakStrategy="simple"
+            keyboardType="email-address"
+            style={styles.email}
+          ></TextInput>
+          <TextInput
+            placeholder=" Password"
+            style={styles.password}
+          ></TextInput>
+          <SubmitButton
+            style={styles.SubmitButton}
+          ></SubmitButton>
+          <TouchableOpacity
+            // onPress={() => props.navigation.navigate("RegisterScreen")}
+            style={styles.button}
+          >
+            <Text>Didn't have Account? Click here</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => setPassword(text)}/>
-        </View>
-
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
-        </TouchableOpacity>
-      </View>
-	);
+      </ImageBackground>
+    </View>
+  );
 }
-
-export default LoginScreen
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#d2f6c5',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1
   },
-  logo:{
-    fontWeight:"bold",
-    fontSize:25,
-    color:"#fb5b5a",
-    marginBottom:40
+  image: {
+    width: 497,
+    height: 876,
+    marginTop: -82,
+    marginLeft: -50
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#bbf1fa",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
+  image_imageStyle: {
+    opacity: 0.57
   },
-  inputText:{
-    height:50,
-    color:"white"
+  group3: {
+    width: 268,
+    height: 271,
+    marginTop: 307,
+    marginLeft: 96
   },
-  forgot:{
-    color:"white",
-    fontSize:11
+  login: {
+    color: "#121212",
+    fontSize: 40,
+    marginLeft: 84
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
+  email: {
+    color: "#121212",
+    height: 35,
+    backgroundColor: "#fff",
+    width: 268,
+    borderRadius: 10,
+    marginTop: 29
   },
-  loginText:{
-    color:"white"
+  password: {
+    color: "#121212",
+    height: 36,
+    width: 268,
+    backgroundColor: "rgba(255,255,255,1)",
+    borderRadius: 10,
+    marginTop: 22
+  },
+  SubmitButton: {
+    width: 268,
+    height: 44,
+    marginTop: 22
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: 'rgba(52, 52, 52, 0)',
+    padding: 10
   }
 });
+
+export default LoginScreen;

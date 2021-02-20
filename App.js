@@ -1,10 +1,10 @@
 import React from 'react';
 import BottomNavigator from './src/routes/BottomNavigator'
-import LoginScreen from './src/screens/LoginScreen'
+import HomeScreen from './src/screens/HomeScreen'
 
 export default function App() {
   return (
-    // <BottomNavigator />
-    <LoginScreen />
+    <BottomNavigator />
+    // <HomeScreen/>
   );
 }
