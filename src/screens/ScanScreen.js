@@ -3,19 +3,23 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
 import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
+import { setPhotoUri, setClarifaiPredictions } from '../store/actions/cameraAction'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ScanScreen = () => {
+  const dispatch = useDispatch()
   const [hasPermission, setHasPermission] = useState(null)
   const [previewVisible, setPreviewVisible] = React.useState(false)
   const [capturedImage, setCapturedImage] = React.useState(null)
   const cameraRef = useRef(null)
+  const { camera } = useSelector(state => state)
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync()
       setHasPermission(status === 'granted')
     })()
-  }, [])
+  }, [camera])
 
   if (hasPermission === null) {
     return <View />
@@ -29,10 +33,12 @@ const ScanScreen = () => {
         base64: true
       })
       setPreviewVisible(true)
+      dispatch(setPhotoUri(photo))
       setCapturedImage(photo)
     }
   }
   const savePhoto = async () => {
+    console.log('Analyzing photo')
     const ClarifaiApp = new Clarifai.App({
       apiKey: '3c94a001482f46109f6a586f7b324d4e'
     })
@@ -41,6 +47,7 @@ const ScanScreen = () => {
         base64: capturedImage.base64
       })
       const { name } = responses.outputs[0].data.concepts[0]
+      dispatch(setClarifaiPredictions(name))
       console.log(name, '<<<< food name')
       if (name) {
         const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
@@ -58,6 +65,7 @@ const ScanScreen = () => {
   const retakePicture = () => {
     setCapturedImage(null)
     setPreviewVisible(false)
+    dispatch(setPhotoUri(''))
   }
   return (
     <View style={styles.container}>
