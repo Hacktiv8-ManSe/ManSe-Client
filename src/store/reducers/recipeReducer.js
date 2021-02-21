@@ -1,5 +1,6 @@
 const initialState = {
-  recipes: []
+  recipes: [],
+  recipe: ''
 }
 
 export default (state = initialState, action) => {
@@ -9,6 +10,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         recipes: payload
+      }
+    case 'FETCH_RECIPE':
+      return {
+        ...state,
+        recipe: payload
       }
     default:
       return state
