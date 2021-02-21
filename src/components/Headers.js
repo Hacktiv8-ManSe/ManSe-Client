@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-function MaterialHeader1(props) {
+function Headers(props) {
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.textWrapperStack}>
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MaterialHeader1;
+export default Headers;
