@@ -1,20 +1,31 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import React from "react";
+import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native'
 
 function CardBody(props) {
+  const navigation = useNavigation()
   return (
-    <View style={[styles.container, props.style]}>
+    <TouchableOpacity 
+      style={[styles.container, props.style]} 
+      onPress={() => {
+        // console.log(props)
+        navigation.navigate("Details", {
+          recipeId: props.recipe.id
+        })
+      }}>
       <Image
-        source={require("../../assets/images/food.jpg")}
+        source={{
+          uri: props.recipe.image
+        }}
         style={styles.cardItemImagePlace}
       ></Image>
       <View style={styles.cardBody}>
         <View style={styles.bodyContent}>
-          <Text style={styles.titleStyle}>Title goes here</Text>
-          <Text style={styles.subtitleStyle}>Subtitle here</Text>
+          <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+          <Text style={styles.subtitleStyle}>Ready in : { props.recipe.readyInMinutes } minutes</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
