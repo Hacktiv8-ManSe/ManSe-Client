@@ -1,10 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux'
+import { signOut } from '../store/actions/userAction'
 
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
   const { camera } = useSelector(state => state)
+  const dispatch = useDispatch()
   console.log(camera.clarifaiPredictions)
   return (
     <View style={{
@@ -12,7 +14,17 @@ const ProfileScreen = () => {
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-      <Text>ProfileScreen</Text>
+      <Text>ProfileScreen {camera.clarifaiPredictions}</Text>
+      <TouchableOpacity 
+        style={{
+          marginTop: 12
+        }} 
+        onPress={() => {
+          props.navigation.navigate("LoginScreen")
+          dispatch(signOut())
+        }} >
+        <Text>Logout</Text>
+      </TouchableOpacity>
     </View>
   )
 }
