@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, Text } from "react-native";
 
 function SubmitButton(props) {
   return (
-    <TouchableOpacity style={[styles.container, props.style]}>
+    <TouchableOpacity style={[styles.container, props.style]} onPress={props.handleOnPress}>
       <Text style={styles.submit}>Submit</Text>
     </TouchableOpacity>
   );
