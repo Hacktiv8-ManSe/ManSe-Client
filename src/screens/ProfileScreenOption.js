@@ -7,12 +7,13 @@ import {
   Text,
   TouchableRipple,
 } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux'
+import { signOut } from '../store/actions/userAction'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ProfileScreen = () => {
-
-
+const ProfileScreen = (props) => {
+  const dispatch = useDispatch()
   return (
     <SafeAreaView style={styles.container}>
 
@@ -80,7 +81,11 @@ const ProfileScreen = () => {
             <Text style={styles.menuItemText}>History</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple 
+          onPress={() => {
+            props.navigation.navigate("LoginScreen")
+            dispatch(signOut())
+          }}>
           <View style={styles.menuItem}>
             <Icon name="logout" color="#FF6347" size={25}/>
             <Text style={styles.menuItemText}>Log Out</Text>
