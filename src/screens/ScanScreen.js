@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 const ScanScreen = () => {
   const dispatch = useDispatch()
   const [hasPermission, setHasPermission] = useState(null)
-  const [previewVisible, setPreviewVisible] = React.useState(false)
-  const [capturedImage, setCapturedImage] = React.useState(null)
+  const [previewVisible, setPreviewVisible] = useState(false)
+  const [capturedImage, setCapturedImage] = useState(null)
+  const [mode, setMode] = useState('Food')
   const cameraRef = useRef(null)
   const { camera } = useSelector(state => state)
 
@@ -73,12 +74,36 @@ const ScanScreen = () => {
         ? <CameraPreview 
             photo={capturedImage}
             savePhoto={savePhoto}
-            retakePicture={retakePicture}/>
+            retakePicture={retakePicture}
+            mode={mode}/>
         : (
             <Camera 
               style={styles.camera}
               type={Camera.Constants.Type.back}
               ref={cameraRef}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: 20
+              }}>
+                <TouchableOpacity onPress={() => setMode('Food')}>
+                  <Text style={{
+                    fontSize: 30,
+                    color: mode === 'Food' ? '#fafafa' : '#555252'
+                  }}>
+                    Food
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setMode('Fridge')}>
+                  <Text style={{
+                    fontSize: 30,
+                    color: mode === 'Fridge' ? '#fafafa' : '#555252'
+                  }}>
+                    Fridge
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.buttonContainer}>
                 <View style={styles.button}>
                   <TouchableOpacity
