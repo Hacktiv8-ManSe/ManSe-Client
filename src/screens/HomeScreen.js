@@ -1,58 +1,46 @@
-// import React, { Component } from "react";
-// import { StyleSheet, View, StatusBar, ScrollView } from "react-native";
-// import CardBody from "../components/CardBody";
-// import Headers from "../components/Headers";
-
-// function HomeScreen(props) {
-//   return (
-//     <View style={styles.container}>
-//       <StatusBar
-//         hidden
-//         barStyle="light-content"
-//         backgroundColor="rgba(0,0,0,1)"
-//       />
-//       <Headers style={styles.Headers}></Headers>
-//       <View style={styles.scrollArea}>
-//         <ScrollView
-//           horizontal={false}
-//         >
-//           <CardBody
-//             style={styles.CardBody}
-//           ></CardBody>
-//           <CardBody
-//             style={styles.CardBody}
-//           ></CardBody>
-//           <CardBody
-//             style={styles.CardBody}
-//           ></CardBody>
-//           <CardBody
-//             style={styles.CardBody}
-//           ></CardBody>
-//         </ScrollView>
-//       </View>
-// =======
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect } from "react";
+import { StyleSheet, View, StatusBar, ScrollView, Dimensions } from "react-native";
+import CardBody from "../components/CardBody";
+import Headers from "../components/Headers";
 import { fetchRecipes } from '../store/actions/recipeAction'
 import { useDispatch, useSelector } from 'react-redux'
 
-const HomeScreen = () => {
-  const dispatch = useDispatch()
-  dispatch(fetchRecipes())
+const { width } = Dimensions.get('screen')
+
+function HomeScreen(props) {
   const { recipe } = useSelector(state => state)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchRecipes())
+    console.log(recipe)
+  }, [])
   return (
-    <View style={{
-      flex:1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    }}>
-      {
-        recipe.recipes?.map(el => {
-          return <Text key={el.id}>{ el.title }</Text>
-        })
-      }
+    <View style={styles.container}>
+      <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
+      <Headers style={styles.Headers}></Headers>
+      <View style={styles.scrollArea}>
+        <ScrollView
+          horizontal={false}
+        >
+          {
+            recipe.recipes?.map(recipe => {
+              return (
+                <CardBody
+                  key={recipe.id}
+                  recipe={recipe}
+                  style={styles.CardBody}
+                />
+              )
+            })
+          }
+        </ScrollView>
+      </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -60,13 +48,16 @@ const styles = StyleSheet.create({
     flex: 1
   },
   Headers: {
-    width: 360,
+    width: width,
     height: 56
   },
   scrollArea: {
-    width: 360,
-    height: 548,
-    marginTop: 20
+    // width: 360,
+    // height: 548,
+    flex: 1,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   scrollArea_contentContainerStyle: {
     height: 548,
