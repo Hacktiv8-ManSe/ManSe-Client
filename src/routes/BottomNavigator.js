@@ -5,7 +5,8 @@ import {
   ScanScreen,
   ProfileScreen,
   LoginScreen,
-  DetailsScreen
+  DetailsScreen,
+  ResultsScreen
 } from '../screens'
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -64,6 +65,7 @@ export default () => (
     <MainStack.Navigator headerMode="none">
       <MainStack.Screen name="App" component={BottomNavigator} />
       <MainStack.Screen name="Details" component={DetailsScreen} />
+      <MainStack.Screen name="Results" component={ResultsScreen} />
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
     </MainStack.Navigator>
   </NavigationContainer>

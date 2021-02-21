@@ -8,20 +8,20 @@ import { useDispatch, useSelector } from 'react-redux'
 const { width } = Dimensions.get('screen')
 
 function HomeScreen(props) {
-  // const { recipe } = useSelector(state => state)
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(fetchRecipes())
-  // }, [])
-  const recipe = {
-    recipes: [
-      {
-        id: 1,
-        title: 'Nasi Minyak (Malaysian Festive Rice)',
-        image: 'https://spoonacular.com/recipeImages/652964-556x370.jpg'
-      }
-    ]
-  }
+  const { recipe } = useSelector(state => state)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchRecipes())
+  }, [])
+  // const recipe = {
+  //   recipes: [
+  //     {
+  //       id: 1,
+  //       title: 'Nasi Minyak (Malaysian Festive Rice)',
+  //       image: 'https://spoonacular.com/recipeImages/652964-556x370.jpg'
+  //     }
+  //   ]
+  // }
   return (
     <View style={styles.container}>
       <StatusBar

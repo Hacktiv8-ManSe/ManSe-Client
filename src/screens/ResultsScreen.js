@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../store/actions/userAction'
 
 
-const ProfileScreen = (props) => {
+const ResultsScreen = (props) => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
   console.log(camera.clarifaiPredictions)
@@ -14,7 +14,7 @@ const ProfileScreen = (props) => {
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-      <Text>ProfileScreen {camera.clarifaiPredictions}</Text>
+      <Text>ResultsScreen {camera.clarifaiPredictions}</Text>
       <TouchableOpacity 
         style={{
           marginTop: 12
@@ -29,6 +29,6 @@ const ProfileScreen = (props) => {
   )
 }
 
-export default ProfileScreen
+export default ResultsScreen
 
 const styles = StyleSheet.create({})

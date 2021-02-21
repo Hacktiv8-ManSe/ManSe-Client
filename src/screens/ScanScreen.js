@@ -5,9 +5,11 @@ import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
 import { setPhotoUri, setClarifaiPredictions } from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 const ScanScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   const [hasPermission, setHasPermission] = useState(null)
   const [previewVisible, setPreviewVisible] = useState(false)
   const [capturedImage, setCapturedImage] = useState(null)
@@ -49,9 +51,10 @@ const ScanScreen = () => {
       })
       const { name } = responses.outputs[0].data.concepts[0]
       dispatch(setClarifaiPredictions(name))
-      console.log(name, '<<<< food name')
+      // console.log(name, '<<<< food name')
+      navigation.navigate('Results')
       if (name) {
-        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
+        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
         if (responses.ok) {
           const data = await responses.json()
           console.log(data)
