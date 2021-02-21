@@ -5,12 +5,15 @@ import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
 import { setPhotoUri, setClarifaiPredictions } from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 const ScanScreen = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   const [hasPermission, setHasPermission] = useState(null)
-  const [previewVisible, setPreviewVisible] = React.useState(false)
-  const [capturedImage, setCapturedImage] = React.useState(null)
+  const [previewVisible, setPreviewVisible] = useState(false)
+  const [capturedImage, setCapturedImage] = useState(null)
+  const [mode, setMode] = useState('Food')
   const cameraRef = useRef(null)
   const { camera } = useSelector(state => state)
 
@@ -48,9 +51,10 @@ const ScanScreen = () => {
       })
       const { name } = responses.outputs[0].data.concepts[0]
       dispatch(setClarifaiPredictions(name))
-      console.log(name, '<<<< food name')
+      // console.log(name, '<<<< food name')
+      navigation.navigate('Results')
       if (name) {
-        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=e341af296eb7461e8d3bd604a66f6018`)
+        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
         if (responses.ok) {
           const data = await responses.json()
           console.log(data)
@@ -73,17 +77,45 @@ const ScanScreen = () => {
         ? <CameraPreview 
             photo={capturedImage}
             savePhoto={savePhoto}
-            retakePicture={retakePicture}/>
+            retakePicture={retakePicture}
+            mode={mode}/>
         : (
             <Camera 
               style={styles.camera}
               type={Camera.Constants.Type.back}
               ref={cameraRef}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+                marginTop: 20
+              }}>
+                <TouchableOpacity onPress={() => setMode('Food')}>
+                  <Text style={{
+                    fontSize: 30,
+                    color: mode === 'Food' ? '#fafafa' : '#555252'
+                  }}>
+                    Food
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setMode('Fridge')}>
+                  <Text style={{
+                    fontSize: 30,
+                    color: mode === 'Fridge' ? '#fafafa' : '#555252'
+                  }}>
+                    Fridge
+                  </Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.buttonContainer}>
                 <View style={styles.button}>
                   <TouchableOpacity
                     onPress={takePicture}
-                    style={styles.buttonRadius}/>
+                    style={styles.buttonRadius}>
+                    <View style={styles.buttonRadiusInside} >
+                      <View style={styles.buttonRadiusInside2} />
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
             </Camera>
@@ -115,12 +147,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     alignItems: 'center'
-    },
+  },
   buttonRadius: {
     width: 70,
     height: 70,
     bottom: 0,
     borderRadius: 50,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonRadiusInside: {
+    width: 60,
+    height: 60,
+    bottom: 0,
+    borderRadius: 40,
+    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonRadiusInside2: {
+    width: 50,
+    height: 50,
+    bottom: 0,
+    borderRadius: 30,
     backgroundColor: '#fff'
   }
 })

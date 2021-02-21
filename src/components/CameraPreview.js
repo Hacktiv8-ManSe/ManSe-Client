@@ -1,13 +1,33 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native'
+import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, BackHandler } from 'react-native'
 
-const CameraPreview = ({photo, retakePicture, savePhoto}) => {
+const CameraPreview = ({photo, retakePicture, savePhoto, mode}) => {
+  const handleBackButtonClick = () => {
+    retakePicture()
+    return true
+  }
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+    }
+  }, [])
   return (
     <View
       style={styles.container}>
       <ImageBackground
         source={{ uri: photo.uri }}
         style={styles.imageContainer}>
+        <View style={{
+          alignItems: 'center'
+        }}>
+          <Text style={{
+            fontSize: 30,
+            color: '#fafafa'
+          }}>
+              {mode} Mode
+          </Text>
+        </View>
         <View
           style={styles.optionsContainer}>
           <View
