@@ -9,9 +9,11 @@
     ImageBackground,
     Text,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
   } from "react-native";
   import SubmitButton from "../components/SubmitButton";
+  const { width, height } = Dimensions.get('screen')
   
   function RegisterScreen(props) {
 
@@ -63,10 +65,10 @@
               style={styles.SubmitButton}
             ></SubmitButton>
             <TouchableOpacity
-            // onPress={() => props.navigation.navigate("RegisterForm")}
+            onPress={() => props.navigation.navigate("Login")}
             style={styles.button}
           >
-            <Text>Didn't have Account? Click here</Text>
+            <Text>Already have an account? Click here</Text>
           </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -78,13 +80,17 @@
     container: {
       flex: 1,
       backgroundColor: "rgba(247,239,239,1)",
-      borderRadius: 10
+      borderRadius: 10,
     },
     image3: {
-      width: 548,
-      height: 1471,
-      marginTop: -364,
-      marginLeft: -131
+      // width: 548,
+      // height: 1471,
+      // marginTop: -364,
+      // marginLeft: -131
+      width: width,
+      height: height,
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     image3_imageStyle: {
       opacity: 0.52
@@ -92,8 +98,11 @@
     group3: {
       width: 269,
       height: 384,
-      marginTop: 532,
-      marginLeft: 177
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+      // marginTop: 532,
+      // marginLeft: 177
     },
     register: {
       color: "#121212",
