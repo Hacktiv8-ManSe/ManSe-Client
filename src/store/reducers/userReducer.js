@@ -1,20 +1,22 @@
 const initialState = {
-  recipes: [],
-  recipe: ''
+  isLoggedIn: false,
+  userData: ''
 }
 
 export default (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
-    case 'FETCH_RECIPES':
+    case 'SIGN_IN':
       return {
         ...state,
-        recipes: payload
+        userData: payload,
+        isLoggedIn: true
       }
-    case 'FETCH_RECIPE':
+    case 'SIGN_OUT':
       return {
         ...state,
-        recipe: payload
+        userData: '',
+        isLoggedIn: false
       }
     default:
       return state

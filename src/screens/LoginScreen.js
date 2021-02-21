@@ -7,14 +7,25 @@ import {
   ImageBackground,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import SubmitButton from "../components/SubmitButton";
+import { signIn } from '../store/actions/userAction'
+import { useDispatch } from 'react-redux'
+const { width, height } = Dimensions.get('screen')
 
 function LoginScreen(props) {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("")
-
+  const dispatch = useDispatch()
+  const handleLogin = () => {
+    // TODO WIRE BACKEND
+    if (email && password) {
+      dispatch(signIn())
+      props.navigation.navigate("App")
+    }
+  }
   return (
     <View style={styles.container}>
       <StatusBar
@@ -26,29 +37,34 @@ function LoginScreen(props) {
         source={require("../../assets/images/potrait2.jpg")}
         resizeMode="contain"
         style={styles.image}
-        imageStyle={styles.image_imageStyle}
-      >
+        imageStyle={styles.image_imageStyle} >
         <View style={styles.group3}>
           <Text style={styles.login}>Login</Text>
-          <TextInput
-            placeholder=" Email"
-            textBreakStrategy="simple"
-            keyboardType="email-address"
-            style={styles.email}
-          ></TextInput>
-          <TextInput
-            placeholder=" Password"
-            style={styles.password}
-          ></TextInput>
-          <SubmitButton
-            style={styles.SubmitButton}
-          ></SubmitButton>
-          <TouchableOpacity
-            // onPress={() => props.navigation.navigate("RegisterScreen")}
-            style={styles.button}
-          >
-            <Text>Didn't have Account? Click here</Text>
-          </TouchableOpacity>
+            <TextInput
+              placeholder=" Email"
+              textBreakStrategy="simple"
+              keyboardType="email-address"
+              style={styles.email}
+              onChangeText={
+                (email) => setEmail(email)
+              }
+              value={email} />
+            <TextInput
+              placeholder=" Password"
+              style={styles.password}
+              secureTextEntry={true}
+              onChangeText={
+                (password) => setPassword(password)
+              }
+              value={password}/>
+            <SubmitButton
+              style={styles.SubmitButton}
+              handleOnPress={handleLogin}/>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate("Register")}
+              style={styles.button}>
+              <Text>Didn't have Account? Click here</Text>
+            </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -60,10 +76,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   image: {
-    width: 497,
-    height: 876,
-    marginTop: -82,
-    marginLeft: -50
+    width: width,
+    height: height,
+    // marginTop: -82,
+    // marginLeft: -50
   },
   image_imageStyle: {
     opacity: 0.57
