@@ -108,7 +108,11 @@ const ScanScreen = () => {
                 <View style={styles.button}>
                   <TouchableOpacity
                     onPress={takePicture}
-                    style={styles.buttonRadius}/>
+                    style={styles.buttonRadius}>
+                    <View style={styles.buttonRadiusInside} >
+                      <View style={styles.buttonRadiusInside2} />
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
             </Camera>
@@ -140,12 +144,30 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flex: 1,
     alignItems: 'center'
-    },
+  },
   buttonRadius: {
     width: 70,
     height: 70,
     bottom: 0,
     borderRadius: 50,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonRadiusInside: {
+    width: 60,
+    height: 60,
+    bottom: 0,
+    borderRadius: 40,
+    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  buttonRadiusInside2: {
+    width: 50,
+    height: 50,
+    bottom: 0,
+    borderRadius: 30,
     backgroundColor: '#fff'
   }
 })
