@@ -1,28 +1,37 @@
 export const fetchRecipes = () => {
-  return (dispatch) => {
-    fetch('https://api.spoonacular.com/recipes/complexSearch?diet=vegetarian,vegan&number=20&addRecipeInformation=true&apiKey=a31a8c1813db4880b3671da8227f060c')
-      .then(res => res.json())
-      .then(data => {
+  return async (dispatch) => {
+    try {
+      const responses = await fetch('https://api.spoonacular.com/recipes/complexSearch?diet=vegetarian,vegan&number=20&addRecipeInformation=true&apiKey=222d6419657447d18b5ab1c8694662fa')
+      if (responses.ok) {
+        const data = await responses.json()
         dispatch({
           type: 'FETCH_RECIPES',
           payload: data.results
         })
-      })
-      .catch(err => console.log(err))
+      } else {
+        throw responses
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
 export const fetchRecipe = (recipeId) => {
-  return (dispatch) => {
-    fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=a31a8c1813db4880b3671da8227f060c`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
+  return async (dispatch) => {
+    try {
+      const responses = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=222d6419657447d18b5ab1c8694662fa`)
+      if (responses.ok) {
+        const data = await responses.json()
         dispatch({
           type: 'FETCH_RECIPE',
           payload: data
         })
-      })
-      .catch(err => console.log(err))
+      } else {
+        throw responses
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
