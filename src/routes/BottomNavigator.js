@@ -16,13 +16,20 @@ import { colors } from '../constants/colors'
 const Tab = createBottomTabNavigator()
 const MainStack = createStackNavigator()
 const HomeStack = createStackNavigator()
+const CameraStack = createStackNavigator()
 
 const HomeStackScreen = () => (
   <HomeStack.Navigator headerMode={"none"}>
     <HomeStack.Screen name="Home" component={HomeScreen}/>
     <HomeStack.Screen name="Details" component={DetailsScreen} />
-    <HomeStack.Screen name="Results" component={ResultsScreen} /> 
   </HomeStack.Navigator>
+)
+
+const CameraStackScreen = () => (
+  <CameraStack.Navigator headerMode={"none"}>
+    <CameraStack.Screen name="Scan" component={ScanScreen}/>
+    <CameraStack.Screen name="Results" component={ResultsScreen} /> 
+  </CameraStack.Navigator>
 )
 
 export const BottomNavigator = () => (
@@ -48,7 +55,7 @@ export const BottomNavigator = () => (
     />
     <Tab.Screen
       name="Scan"
-      component={ScanScreen}
+      component={CameraStackScreen}
       options={{
         tabBarLabel: "Scan",
         tabBarIcon: ({ color, size }) => (
