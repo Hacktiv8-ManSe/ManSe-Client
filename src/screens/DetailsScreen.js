@@ -8,10 +8,10 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native'
-import HeaderImageScrollView, {
-  TriggeringView,
-} from 'react-native-image-header-scroll-view';
-import * as Animatable from 'react-native-animatable';
+// import HeaderImageScrollView, {
+//   TriggeringView,
+// } from 'react-native-image-header-scroll-view';
+// import * as Animatable from 'react-native-animatable';
 import { fetchRecipe } from '../store/actions/recipeAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from "expo-linear-gradient"
