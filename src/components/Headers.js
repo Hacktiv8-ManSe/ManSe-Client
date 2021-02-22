@@ -1,17 +1,34 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { 
+  useFonts,
+  Bellota_300Light,
+  Bellota_300Light_Italic,
+  Bellota_400Regular,
+  Bellota_400Regular_Italic,
+  Bellota_700Bold,
+  Bellota_700Bold_Italic 
+} from '@expo-google-fonts/bellota'
+import AppLoading from 'expo-app-loading'
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 function Headers(props) {
+
+  let [fontsLoad, error] = useFonts({
+    Bellota_700Bold
+  })
+
+  if(!fontsLoad) {
+    return <AppLoading/>
+  }
+
   return (
     <View style={[styles.container, props.style]}>
-      <View style={styles.textWrapperStack}>
-        <View style={styles.textWrapper}></View>
-        <Text
-          style={styles.text}
-        >NutriSee</Text>
+      <TouchableOpacity>
+      <View>
+        <Text style={styles.text}>NutriSee</Text>
       </View>
-      <View style={styles.textWrapperStackFiller}></View>
+      </TouchableOpacity>
       <TouchableOpacity>
       <Image
         source={require("../../assets/images/profile.jpg")}
@@ -41,28 +58,18 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     position: "absolute",
-    left: 0,
-    top: 8
+    top: 8,
+    marginBottom: 20
   },
   text: {
     top: 0,
-    position: "absolute",
     color: "#121212",
-    height: 30,
-    width: 81,
-    fontSize: 20,
+    width: "auto",
+    marginLeft: 10,
+    fontSize: 30,
     left: 0,
-    color: "white"
-  },
-  textWrapperStack: {
-    width: 81,
-    height: 30,
-    marginLeft: 21,
-    marginTop: 11
-  },
-  textWrapperStackFiller: {
-    flex: 1,
-    flexDirection: "row"
+    color: "white",
+    fontFamily: "Bellota_700Bold"
   },
   image: {
     borderRadius: 150,

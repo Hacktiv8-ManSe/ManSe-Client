@@ -81,8 +81,8 @@ export default () => (
   <NavigationContainer>
     <MainStack.Navigator headerMode="none">
       <MainStack.Screen name="App" component={BottomNavigator} />
-      {/* <MainStack.Screen name="Details" component={DetailsScreen} />
-      <MainStack.Screen name="Results" component={ResultsScreen} />  */}
+      <MainStack.Screen name="Details" component={DetailsScreen} />
+      <MainStack.Screen name="Results" component={ResultsScreen} /> 
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
       <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
     </MainStack.Navigator>

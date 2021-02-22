@@ -8,10 +8,6 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native'
-import HeaderImageScrollView, {
-  TriggeringView,
-} from 'react-native-image-header-scroll-view';
-import * as Animatable from 'react-native-animatable';
 import { fetchRecipe } from '../store/actions/recipeAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from "expo-linear-gradient"
@@ -186,7 +182,7 @@ const DetailsScreen = (props) => {
                 { recipe?.readyInMinutes } min
               </Text>
               <Text style={{ padding: 5 }}>
-                { recipe?.nutrition.nutrients[0]?.amount } { recipe?.nutrition.nutrients[0]?.unit }
+                { recipe?.nutrition?.nutrients[0]?.amount } { recipe?.nutrition?.nutrients[0]?.unit }
               </Text>
               <Text style={{ padding: 5 }}>
                 { recipe?.servings } servings
@@ -262,7 +258,11 @@ const DetailsScreen = (props) => {
             marginTop: 20,
             backgroundColor: '#f9f9f9',
             borderRadius: 8,
-            padding: 10
+            padding: 10,
+            justifyContent: 'center',
+            alignItems: 'stretch',
+            flex: 1,
+flexDirection: 'column'
           }}>
             {
               renderButton === 'directions'
@@ -278,14 +278,19 @@ const DetailsScreen = (props) => {
                   </Text>
                 })
               : recipe.nutrition?.nutrients?.map((el, idx) => {
-                return <Text key={idx} style={{
-                  fontWeight: '500',
-                  fontSize: 20,
-                  color: 'black',
+                return <View key={idx} style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
                   marginBottom: 5
                 }}>
-                  {el.title} {el.amount} {el.unit}
-                </Text>
+                  <Text>{ el.title }</Text>
+                  <View style={{
+                    flexDirection: 'row'
+                  }}>
+                    <Text style={{marginRight: 5}}>{ el.amount }</Text>
+                    <Text>{ el.unit }</Text>
+                  </View>
+                </View>
               })
             }
           </View>

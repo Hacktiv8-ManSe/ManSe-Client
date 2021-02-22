@@ -21,8 +21,15 @@ function CardBody(props) {
       ></Image>
       <View style={styles.cardBody}>
         <View style={styles.bodyContent}>
-          <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
-          <Text style={styles.subtitleStyle}>Ready in : { props.recipe.readyInMinutes } minutes</Text>
+          {
+            props.recipe.readyInMinutes ?
+            <View>
+            <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+            <Text style={styles.subtitleStyle}>Ready in : { props.recipe.readyInMinutes } minutes</Text>
+            </View>
+            :
+            <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+          }
         </View>
       </View>
     </TouchableOpacity>
