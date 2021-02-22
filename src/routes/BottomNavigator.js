@@ -16,6 +16,22 @@ import { colors } from '../constants/colors'
 
 const Tab = createBottomTabNavigator()
 const MainStack = createStackNavigator()
+const HomeStack = createStackNavigator()
+const CameraStack = createStackNavigator()
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator headerMode={"none"}>
+    <HomeStack.Screen name="Home" component={HomeScreen}/>
+    <HomeStack.Screen name="Details" component={DetailsScreen} />
+  </HomeStack.Navigator>
+)
+
+const CameraStackScreen = () => (
+  <CameraStack.Navigator headerMode={"none"}>
+    <CameraStack.Screen name="Scan" component={ScanScreen}/>
+    <CameraStack.Screen name="Results" component={ResultsScreen} /> 
+  </CameraStack.Navigator>
+)
 
 export const BottomNavigator = () => (
   <Tab.Navigator
@@ -30,7 +46,7 @@ export const BottomNavigator = () => (
   >
     <Tab.Screen
       name="Home"
-      component={HomeScreen}
+      component={HomeStackScreen}
       options={{
         tabBarLabel: "Home",
         tabBarIcon: ({ color, size }) => (
@@ -40,7 +56,7 @@ export const BottomNavigator = () => (
     />
     <Tab.Screen
       name="Scan"
-      component={ScanScreen}
+      component={CameraStackScreen}
       options={{
         tabBarLabel: "Scan",
         tabBarIcon: ({ color, size }) => (
@@ -65,8 +81,8 @@ export default () => (
   <NavigationContainer>
     <MainStack.Navigator headerMode="none">
       <MainStack.Screen name="App" component={BottomNavigator} />
-      <MainStack.Screen name="Details" component={DetailsScreen} />
-      <MainStack.Screen name="Results" component={ResultsScreen} />
+      {/* <MainStack.Screen name="Details" component={DetailsScreen} />
+      <MainStack.Screen name="Results" component={ResultsScreen} />  */}
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
       <MainStack.Screen name="RegisterScreen" component={RegisterScreen} />
     </MainStack.Navigator>
