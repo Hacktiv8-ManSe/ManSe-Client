@@ -15,6 +15,15 @@ import { colors } from '../constants/colors'
 
 const Tab = createBottomTabNavigator()
 const MainStack = createStackNavigator()
+const HomeStack = createStackNavigator()
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator headerMode={"none"}>
+    <HomeStack.Screen name="Home" component={HomeScreen}/>
+    <HomeStack.Screen name="Details" component={DetailsScreen} />
+    <HomeStack.Screen name="Results" component={ResultsScreen} /> 
+  </HomeStack.Navigator>
+)
 
 export const BottomNavigator = () => (
   <Tab.Navigator
@@ -29,7 +38,7 @@ export const BottomNavigator = () => (
   >
     <Tab.Screen
       name="Home"
-      component={HomeScreen}
+      component={HomeStackScreen}
       options={{
         tabBarLabel: "Home",
         tabBarIcon: ({ color, size }) => (
@@ -64,8 +73,8 @@ export default () => (
   <NavigationContainer>
     <MainStack.Navigator headerMode="none">
       <MainStack.Screen name="App" component={BottomNavigator} />
-      <MainStack.Screen name="Details" component={DetailsScreen} />
-      <MainStack.Screen name="Results" component={ResultsScreen} />
+      {/* <MainStack.Screen name="Details" component={DetailsScreen} />
+      <MainStack.Screen name="Results" component={ResultsScreen} />  */}
       <MainStack.Screen name="LoginScreen" component={LoginScreen} />
     </MainStack.Navigator>
   </NavigationContainer>
