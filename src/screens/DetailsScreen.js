@@ -175,13 +175,13 @@ const DetailsScreen = (props) => {
                 borderRadius: 8
               }}>
               <Text style={{ padding: 5 }}>
-                { recipe?.nutrition.weightPerServing.amount } { recipe?.nutrition.weightPerServing.unit }
+                { recipe?.nutrition?.weightPerServing.amount } { recipe?.nutrition?.weightPerServing.unit }
               </Text>
               <Text style={{ padding: 5 }}>
                 { recipe?.readyInMinutes } min
               </Text>
               <Text style={{ padding: 5 }}>
-                { recipe?.nutrition.nutrients[0].amount } { recipe?.nutrition.nutrients[0].unit }
+                { recipe?.nutrition?.nutrients[0].amount } { recipe?.nutrition?.nutrients[0].unit }
               </Text>
               <Text style={{ padding: 5 }}>
                 { recipe?.servings } servings
