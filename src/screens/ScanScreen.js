@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonRadiusInside: {
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     bottom: 0,
     borderRadius: 40,
     backgroundColor: '#000',
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   buttonRadiusInside2: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
     bottom: 0,
     borderRadius: 30,
     backgroundColor: '#fff'
