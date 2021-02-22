@@ -8,6 +8,10 @@ import {
   ScrollView,
   TouchableOpacity
 } from 'react-native'
+import HeaderImageScrollView, {
+  TriggeringView,
+} from 'react-native-image-header-scroll-view';
+import * as Animatable from 'react-native-animatable';
 import { fetchRecipe } from '../store/actions/recipeAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from "expo-linear-gradient"
@@ -17,12 +21,13 @@ const DetailsScreen = (props) => {
   const { recipeId } = props.route.params
   const [renderButton, setRenderButton] = useState('nutritions')
   const dispatch = useDispatch()
+  
   useEffect(() => {
     dispatch(fetchRecipe(recipeId))
     console.log(recipeId)
   }, [recipeId])
   const { recipe } = useSelector(state => state.recipe)
-  // console.log(recipe)
+  console.log(recipe)
   /**
    * limit spoonacuilar
    */
@@ -175,13 +180,13 @@ const DetailsScreen = (props) => {
                 borderRadius: 8
               }}>
               <Text style={{ padding: 5 }}>
-                { recipe?.nutrition.weightPerServing.amount } { recipe?.nutrition.weightPerServing.unit }
+                { recipe?.nutrition?.weightPerServing?.amount } { recipe?.nutrition?.weightPerServing?.unit }
               </Text>
               <Text style={{ padding: 5 }}>
                 { recipe?.readyInMinutes } min
               </Text>
               <Text style={{ padding: 5 }}>
-                { recipe?.nutrition.nutrients[0].amount } { recipe?.nutrition.nutrients[0].unit }
+                { recipe?.nutrition.nutrients[0]?.amount } { recipe?.nutrition.nutrients[0]?.unit }
               </Text>
               <Text style={{ padding: 5 }}>
                 { recipe?.servings } servings
@@ -199,7 +204,7 @@ const DetailsScreen = (props) => {
                 fontWeight: '500',
                 fontSize: 20,
                 color: 'black',
-                marginBottom: 5
+                marginBottom: 10
               }}>
                 Ingredients
               </Text>
@@ -211,7 +216,7 @@ const DetailsScreen = (props) => {
                       justifyContent: 'space-between',
                       marginBottom: 5
                     }}>
-                      <Text>{ ingredient.name }</Text>
+                      <Text>{ ingredient.name.charAt(0).toUpperCase() + ingredient.name.slice(1) }</Text>
                       <View style={{
                         flexDirection: 'row'
                       }}>
@@ -262,14 +267,14 @@ const DetailsScreen = (props) => {
             {
               renderButton === 'directions'
               ?
-                recipe.nutrition?.nutrients?.map((el, idx) => {
+                recipe.analyzedInstructions[0]?.steps.map((el, idx) => {
                   return <Text key={idx} style={{
                     fontWeight: '500',
-                    fontSize: 20,
+                    fontSize: 12,
                     color: 'black',
                     marginBottom: 5
                   }}>
-                    Directions
+                    { el.number }. { el.step }
                   </Text>
                 })
               : recipe.nutrition?.nutrients?.map((el, idx) => {

@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
   cardItemImagePlace: {
     backgroundColor: "#ccc",
     width: "auto",
-    flex: 1,
-    minHeight: 359
+    flex: 1
   },
   cardBody: {
     position: "absolute",

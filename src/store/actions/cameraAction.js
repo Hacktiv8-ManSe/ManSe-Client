@@ -15,3 +15,12 @@ export const setClarifaiPredictions = (payload) => {
     })
   }
 }
+
+export const cameraData = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_DATA_CAMERA',
+      payload
+    })
+  }
+}
