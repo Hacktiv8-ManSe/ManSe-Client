@@ -61,7 +61,7 @@ function LoginScreen(props) {
               style={styles.SubmitButton}
               handleOnPress={handleLogin}/>
             <TouchableOpacity
-              onPress={() => props.navigation.navigate("Register")}
+              onPress={() => props.navigation.navigate("RegisterScreen")}
               style={styles.button}>
               <Text>Didn't have Account? Click here</Text>
             </TouchableOpacity>

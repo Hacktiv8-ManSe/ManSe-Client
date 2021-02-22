@@ -1,7 +1,7 @@
 export const fetchRecipes = () => {
   return async (dispatch) => {
     try {
-      const responses = await fetch('https://api.spoonacular.com/recipes/complexSearch?diet=vegetarian,vegan&number=20&addRecipeInformation=true&apiKey=ae1567c7e44b4b748186128672c72144')
+      const responses = await fetch('https://api.spoonacular.com/recipes/complexSearch?diet=vegetarian,vegan&number=20&addRecipeInformation=true&apiKey=fe253a5e03924c7b95e48192dfdc14ac')
       if (responses.ok) {
         const data = await responses.json()
         dispatch({
@@ -20,9 +20,10 @@ export const fetchRecipes = () => {
 export const fetchRecipe = (recipeId) => {
   return async (dispatch) => {
     try {
-      const responses = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=ae1567c7e44b4b748186128672c72144`)
+      const responses = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=fe253a5e03924c7b95e48192dfdc14ac`)
       if (responses.ok) {
         const data = await responses.json()
+        // console.log(data)
         dispatch({
           type: 'FETCH_RECIPE',
           payload: data

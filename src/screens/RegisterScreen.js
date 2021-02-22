@@ -35,22 +35,40 @@
         >
           <View style={styles.group3}>
             <Text style={styles.register}>Register</Text>
-            <TextInput placeholder=" Email" style={styles.email}></TextInput>
+            <TextInput 
+            placeholder=" Email" 
+            style={styles.email}
+            onChangeText={
+              (email) => setEmail(email)
+            }
+            value={email}></TextInput>
             <TextInput
               placeholder=" Password"
               secureTextEntry={true}
               style={styles.textInput}
+              onChangeText={
+                (password) => setPassword(password)
+              }
+              value={password}
             ></TextInput>
             <View style={styles.weightRow}>
               <TextInput
                 placeholder=" Weight"
                 keyboardType="numeric"
                 style={styles.weight}
+                onChangeText={
+                  (weight) => setWeight(weight)
+                }
+                value={weight}
               ></TextInput>
               <TextInput
                 placeholder=" Height"
                 keyboardType="numeric"
                 style={styles.height}
+                onChangeText={
+                  (height) => setHeight(height)
+                }
+                value={height}
               ></TextInput>
             </View>
             <View style={styles.ageRow}>
@@ -58,6 +76,10 @@
                 placeholder=" Age"
                 keyboardType="numeric"
                 style={styles.age}
+                onChangeText={
+                  (age) => setAge(age)
+                }
+                value={age}
               ></TextInput>
               <TextInput placeholder=" Gender" style={styles.gender}></TextInput>
             </View>
@@ -65,7 +87,7 @@
               style={styles.SubmitButton}
             ></SubmitButton>
             <TouchableOpacity
-            onPress={() => props.navigation.navigate("Login")}
+            onPress={() => props.navigation.navigate("LoginScreen")}
             style={styles.button}
           >
             <Text>Already have an account? Click here</Text>

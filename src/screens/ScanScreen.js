@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
 import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
-import { setPhotoUri, setClarifaiPredictions } from '../store/actions/cameraAction'
+import { setPhotoUri, setClarifaiPredictions, cameraData } from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 
@@ -57,7 +57,7 @@ const ScanScreen = () => {
         const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
         if (responses.ok) {
           const data = await responses.json()
-          console.log(data)
+          dispatch(cameraData(data))
         } else {
           throw responses
         }
