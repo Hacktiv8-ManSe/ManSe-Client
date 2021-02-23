@@ -8,7 +8,6 @@ function CardBody(props) {
     <TouchableOpacity 
       style={[styles.container, props.style]} 
       onPress={() => {
-        // console.log(props)
         navigation.navigate("Details", {
           recipeId: props.recipe.id
         })

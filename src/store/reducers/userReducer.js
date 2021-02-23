@@ -1,10 +1,11 @@
 const initialState = {
   isLoggedIn: false,
-  userData: ''
+  userData: {}
 }
 
 export default (state = initialState, action) => {
   const { type, payload } = action
+  // console.log(payload, "dari reducer user")
   switch (type) {
     case 'SIGN_IN':
       return {

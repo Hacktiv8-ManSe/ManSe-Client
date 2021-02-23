@@ -10,6 +10,7 @@ const { width } = Dimensions.get('screen')
 const ResultsScreen = (props) => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
+  console.log(camera.clarifaiPredictions)
   console.log(camera.cameraData)
   return (
     <View style={{
