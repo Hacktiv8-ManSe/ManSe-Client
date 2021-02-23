@@ -11,6 +11,7 @@ import {
 import { fetchRecipe } from '../store/actions/recipeAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinearGradient } from "expo-linear-gradient"
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const { width } = Dimensions.get('screen')  
 const DetailsScreen = (props) => {
@@ -175,15 +176,20 @@ const DetailsScreen = (props) => {
                 justifyContent: 'space-evenly',
                 borderRadius: 8
               }}>
+                <Icon style={{ marginTop: 8 }} name="weight-gram" color="#FF6347"/>
               <Text style={{ padding: 5 }}>
+              
                 { recipe?.nutrition?.weightPerServing?.amount } { recipe?.nutrition?.weightPerServing?.unit }
               </Text>
+              <Icon style={{ marginTop: 8 }} name="clock-time-five-outline" color="#FF6347"/>
               <Text style={{ padding: 5 }}>
                 { recipe?.readyInMinutes } min
               </Text>
+              <Icon style={{ marginTop: 8 }} name="food-drumstick-outline" color="#FF6347"/>
               <Text style={{ padding: 5 }}>
                 { recipe?.nutrition?.nutrients[0]?.amount } { recipe?.nutrition?.nutrients[0]?.unit }
               </Text>
+              <Icon style={{ marginTop: 8 }} name="account" color="#FF6347"/>
               <Text style={{ padding: 5 }}>
                 { recipe?.servings } servings
               </Text>
