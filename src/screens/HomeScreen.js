@@ -11,7 +11,7 @@ function HomeScreen(props) {
   const { recipe, user } = useSelector(state => state)
   const dispatch = useDispatch()
   useEffect(() => {
-    // console.log(user, "dari HomeScreen")
+    console.log(user, "dari HomeScreen")
     dispatch(fetchRecipes())
   }, [])
   // const recipe = {

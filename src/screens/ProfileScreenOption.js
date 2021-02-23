@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, SafeAreaView, StyleSheet} from 'react-native';
 import {
   Avatar,
@@ -13,6 +13,12 @@ import { signOut } from '../store/actions/userAction'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProfileScreen = (props) => {
+  const { user } = useSelector(state => state)
+  useEffect(() => {
+    console.log(user, "dari Profile")
+  }, [])
+  useEffect
+
   const dispatch = useDispatch()
   return (
     <SafeAreaView style={styles.container}>
@@ -27,7 +33,7 @@ const ProfileScreen = (props) => {
             <Title style={[styles.title, {
               marginTop:15,
               marginBottom: 5,
-            }]}>Lisa</Title>
+            }]}>{user?.userData?.name}</Title>
             <Caption style={styles.caption}>@lisa_z</Caption>
           </View>
         </View>
@@ -36,11 +42,11 @@ const ProfileScreen = (props) => {
       <View style={styles.userInfoSection}>
         <View style={styles.row}>
           <Icon name="gender-male-female" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>Female</Text>
+          <Text style={{color:"#777777", marginLeft: 20}}>{user?.userData?.gender}</Text>
         </View>
         <View style={styles.row}>
           <Icon name="email" color="#777777" size={20}/>
-          <Text style={{color:"#777777", marginLeft: 20}}>john_doe@email.com</Text>
+          <Text style={{color:"#777777", marginLeft: 20}}>{user?.userData?.email}</Text>
         </View>
       </View>
 
@@ -49,11 +55,11 @@ const ProfileScreen = (props) => {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
-            <Title>50</Title>
+            <Title>{user?.userData?.bodystats?.weight}</Title>
             <Caption>kg</Caption>
           </View>
           <View style={styles.infoBox}>
-            <Title>175</Title>
+            <Title>{user?.userData?.bodystats?.height}</Title>
             <Caption>cm</Caption>
           </View>
       </View>
@@ -63,7 +69,7 @@ const ProfileScreen = (props) => {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
-            <Title>1150</Title>
+            <Title>{user?.userData?.bmr}</Title>
             <Caption>cal/day</Caption>
           </View>
       </View>

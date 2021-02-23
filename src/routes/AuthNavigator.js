@@ -11,8 +11,8 @@ const AuthStack = createStackNavigator()
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator headerMode="none">
-    <AuthStack.Screen name="Login" component={LoginScreen} />
-    <AuthStack.Screen name="Register" component={RegisterScreen} />
+    <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+    <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
   </AuthStack.Navigator>
 )
 
