@@ -33,65 +33,67 @@
           style={styles.image3}
           imageStyle={styles.image3_imageStyle}
         >
-          <View style={styles.group3}>
-            <Text style={styles.register}>Register</Text>
-            <TextInput 
-            placeholder=" Email" 
-            style={styles.email}
-            onChangeText={
-              (email) => setEmail(email)
-            }
-            value={email}></TextInput>
-            <TextInput
-              placeholder=" Password"
-              secureTextEntry={true}
-              style={styles.textInput}
+          <View style={styles.container}>
+            <View style={styles.group3}>
+              <Text style={styles.register}>Register</Text>
+              <TextInput 
+              placeholder=" Email" 
+              style={styles.email}
               onChangeText={
-                (password) => setPassword(password)
+                (email) => setEmail(email)
               }
-              value={password}
-            ></TextInput>
-            <View style={styles.weightRow}>
+              value={email}></TextInput>
               <TextInput
-                placeholder=" Weight"
-                keyboardType="numeric"
-                style={styles.weight}
+                placeholder=" Password"
+                secureTextEntry={true}
+                style={styles.textInput}
                 onChangeText={
-                  (weight) => setWeight(weight)
+                  (password) => setPassword(password)
                 }
-                value={weight}
+                value={password}
               ></TextInput>
-              <TextInput
-                placeholder=" Height"
-                keyboardType="numeric"
-                style={styles.height}
-                onChangeText={
-                  (height) => setHeight(height)
-                }
-                value={height}
-              ></TextInput>
+              <View style={styles.weightRow}>
+                <TextInput
+                  placeholder=" Weight"
+                  keyboardType="numeric"
+                  style={styles.weight}
+                  onChangeText={
+                    (weight) => setWeight(weight)
+                  }
+                  value={weight}
+                ></TextInput>
+                <TextInput
+                  placeholder=" Height"
+                  keyboardType="numeric"
+                  style={styles.height}
+                  onChangeText={
+                    (height) => setHeight(height)
+                  }
+                  value={height}
+                ></TextInput>
+              </View>
+              <View style={styles.ageRow}>
+                <TextInput
+                  placeholder=" Age"
+                  keyboardType="numeric"
+                  style={styles.age}
+                  onChangeText={
+                    (age) => setAge(age)
+                  }
+                  value={age}
+                ></TextInput>
+                <TextInput placeholder=" Gender" style={styles.gender}></TextInput>
+              </View>
+              <SubmitButton
+                style={styles.SubmitButton}
+              ></SubmitButton>
+              <TouchableOpacity
+              onPress={() => props.navigation.navigate("LoginScreen")}
+              style={styles.button}
+            >
+              <Text>Already have an account? Click here</Text>
+            </TouchableOpacity>
             </View>
-            <View style={styles.ageRow}>
-              <TextInput
-                placeholder=" Age"
-                keyboardType="numeric"
-                style={styles.age}
-                onChangeText={
-                  (age) => setAge(age)
-                }
-                value={age}
-              ></TextInput>
-              <TextInput placeholder=" Gender" style={styles.gender}></TextInput>
-            </View>
-            <SubmitButton
-              style={styles.SubmitButton}
-            ></SubmitButton>
-            <TouchableOpacity
-            onPress={() => props.navigation.navigate("LoginScreen")}
-            style={styles.button}
-          >
-            <Text>Already have an account? Click here</Text>
-          </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
@@ -109,13 +111,13 @@
       // height: 1471,
       // marginTop: -364,
       // marginLeft: -131
-      width: width,
+      width: '100%',
       height: height,
       justifyContent: 'center',
       alignItems: 'center'
     },
     image3_imageStyle: {
-      opacity: 0.52
+      opacity: 0.65
     },
     group3: {
       width: 269,
@@ -127,7 +129,7 @@
       // marginLeft: 177
     },
     register: {
-      color: "#121212",
+      color: "#fff",
       fontSize: 40,
       marginLeft: 66,
       marginRight: 39
@@ -197,7 +199,8 @@
       height: 44,
       width: 266,
       marginTop: 19,
-      marginLeft: 1
+      marginLeft: 1,
+      backgroundColor: "rgba(255,165,0,0.8)"
     },
     button: {
       alignItems: "center",
