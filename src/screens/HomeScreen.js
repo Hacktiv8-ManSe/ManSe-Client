@@ -8,9 +8,10 @@ import { useDispatch, useSelector } from 'react-redux'
 const { width } = Dimensions.get('screen')
 
 function HomeScreen(props) {
-  const { recipe } = useSelector(state => state)
+  const { recipe, user } = useSelector(state => state)
   const dispatch = useDispatch()
   useEffect(() => {
+    // console.log(user, "dari HomeScreen")
     dispatch(fetchRecipes())
   }, [])
   // const recipe = {

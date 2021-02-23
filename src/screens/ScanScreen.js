@@ -6,6 +6,7 @@ import Clarifai, { FOOD_MODEL } from 'clarifai'
 import { setPhotoUri, setClarifaiPredictions, cameraData } from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import SplashLoading from '../components/SplashLoading'
 
 const ScanScreen = () => {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ const ScanScreen = () => {
   const [mode, setMode] = useState('Food')
   const cameraRef = useRef(null)
   const { camera } = useSelector(state => state)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
@@ -30,6 +32,11 @@ const ScanScreen = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>
   }
+
+  if (!isLoading) {
+    return <SplashLoading/>
+  }
+
   const takePicture = async () => {
     if (cameraRef) {
       const photo = await cameraRef.current.takePictureAsync({
@@ -41,6 +48,7 @@ const ScanScreen = () => {
     }
   }
   const savePhoto = async () => {
+    setIsLoading(false)
     console.log('Analyzing photo')
     const ClarifaiApp = new Clarifai.App({
       apiKey: '3c94a001482f46109f6a586f7b324d4e'
@@ -52,12 +60,13 @@ const ScanScreen = () => {
       const { name } = responses.outputs[0].data.concepts[0]
       dispatch(setClarifaiPredictions(name))
       // console.log(name, '<<<< food name')
-      navigation.navigate('Results')
       if (name) {
         const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
         if (responses.ok) {
           const data = await responses.json()
           dispatch(cameraData(data))
+          setIsLoading(true)
+          navigation.navigate('Results')
         } else {
           throw responses
         }

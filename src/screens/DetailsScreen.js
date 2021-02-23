@@ -20,10 +20,10 @@ const DetailsScreen = (props) => {
   
   useEffect(() => {
     dispatch(fetchRecipe(recipeId))
-    console.log(recipeId)
+    // console.log(recipeId)
   }, [recipeId])
   const { recipe } = useSelector(state => state.recipe)
-  console.log(recipe)
+  // console.log(recipe)
   /**
    * limit spoonacuilar
    */
@@ -262,7 +262,7 @@ const DetailsScreen = (props) => {
             justifyContent: 'center',
             alignItems: 'stretch',
             flex: 1,
-flexDirection: 'column'
+            flexDirection: 'column'
           }}>
             {
               renderButton === 'directions'

@@ -22,7 +22,7 @@ function LoginScreen(props) {
   const handleLogin = () => {
     // TODO WIRE BACKEND
     if (email && password) {
-      dispatch(signIn())
+      dispatch(signIn({email, password}))
       props.navigation.navigate("App")
     }
   }
