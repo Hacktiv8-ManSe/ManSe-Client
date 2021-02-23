@@ -12,6 +12,7 @@
     TouchableOpacity,
     Dimensions
   } from "react-native";
+  import { RadioButton } from 'react-native-paper';
   import SubmitButton from "../components/SubmitButton";
   const { width, height } = Dimensions.get('screen')
   
@@ -28,8 +29,8 @@
       <View style={styles.container}>
         <StatusBar barStyle="light-content" backgroundColor="rgba(7,0,0,1)" />
         <ImageBackground
-          source={require("../../assets/images/potrait1.jpg")}
-          resizeMode="contain"
+          source={require("../../assets/images/login.jpg")}
+          resizeMode="cover"
           style={styles.image3}
           imageStyle={styles.image3_imageStyle}
         >
@@ -52,6 +53,15 @@
                 }
                 value={password}
               ></TextInput>
+              <TextInput
+                placeholder=" Age"
+                keyboardType="numeric"
+                style={styles.age}
+                onChangeText={
+                  (age) => setAge(age)
+                }
+                value={age}
+              ></TextInput>
               <View style={styles.weightRow}>
                 <TextInput
                   placeholder=" Weight"
@@ -72,27 +82,20 @@
                   value={height}
                 ></TextInput>
               </View>
-              <View style={styles.ageRow}>
-                <TextInput
-                  placeholder=" Age"
-                  keyboardType="numeric"
-                  style={styles.age}
-                  onChangeText={
-                    (age) => setAge(age)
-                  }
-                  value={age}
-                ></TextInput>
-                <TextInput placeholder=" Gender" style={styles.gender}></TextInput>
-              </View>
+              <RadioButton.Group onValueChange={gender => setGender(gender)} value={gender}>
+                <Text style={styles.genderTitle}>Gender</Text>
+                <RadioButton.Item style={styles.gender} label="Male" value="male" />
+                <RadioButton.Item style={styles.gender} label="Female" value="female" />
+              </RadioButton.Group>
               <SubmitButton
                 style={styles.SubmitButton}
               ></SubmitButton>
               <TouchableOpacity
               onPress={() => props.navigation.navigate("LoginScreen")}
               style={styles.button}
-            >
-              <Text>Already have an account? Click here</Text>
-            </TouchableOpacity>
+              >
+                <Text style={styles.notice}>Already have an account? Click here</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>
@@ -103,14 +106,9 @@
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "rgba(247,239,239,1)",
-      borderRadius: 10,
+      borderRadius: 10
     },
     image3: {
-      // width: 548,
-      // height: 1471,
-      // marginTop: -364,
-      // marginLeft: -131
       width: '100%',
       height: height,
       justifyContent: 'center',
@@ -125,14 +123,11 @@
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
-      // marginTop: 532,
-      // marginLeft: 177
     },
     register: {
       color: "#fff",
       fontSize: 40,
-      marginLeft: 66,
-      marginRight: 39
+      alignItems: 'center'
     },
     email: {
       color: "#121212",
@@ -176,24 +171,30 @@
     },
     age: {
       color: "#121212",
-      height: 38,
-      width: 121,
-      backgroundColor: "#fff",
-      borderRadius: 10
+      height: 35,
+      width: 268,
+      borderRadius: 10,
+      backgroundColor: "rgba(255,255,255,1)",
+      marginTop: 24,
+      marginLeft: 1
     },
     gender: {
       color: "#121212",
-      height: 38,
-      width: 130,
+      height: 28,
+      width: 268,
       borderRadius: 10,
-      backgroundColor: "#fff",
-      marginLeft: 13
-    },
-    ageRow: {
-      height: 38,
-      flexDirection: "row",
+      backgroundColor: "rgba(255,255,255,1)",
       marginTop: 20,
-      marginRight: 5
+      marginLeft: 10
+    },
+    genderTitle: {
+      color: "#fff",
+      fontSize: 16,
+      height: 20,
+      width: 268,
+      borderRadius: 10,
+      marginTop: 24,
+      marginLeft: 15
     },
     SubmitButton: {
       height: 44,
@@ -206,6 +207,10 @@
       alignItems: "center",
       backgroundColor: 'rgba(52, 52, 52, 0)',
       padding: 10
+    },
+    notice: {
+      color: "#fff",
+      textAlign: 'center'
     }
   });
   
