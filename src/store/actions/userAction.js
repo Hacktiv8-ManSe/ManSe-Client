@@ -4,15 +4,13 @@ export const signIn = (data) => {
   return async (dispatch) => {
     // wiring backend fetch post
     try {
-      // console.log(JSON.stringify(data))
       // ganti url dengan wifi IP. cek IP di command prompt - ipconfig
       const response = await fetch('http://192.168.100.7:5001/login', 
       { 
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify({
           email: data.email,
@@ -20,8 +18,7 @@ export const signIn = (data) => {
         })
       })
       let result = await response.json()
-      // console.log(result)
-      // await AsyncStorage.setItem('access_token', result.access_token)
+      await AsyncStorage.setItem('access_token', result.access_token)
       const userData = await fetch(`http://192.168.100.7:5001/users/${result._id}`, {
         method: 'GET',
         headers: {
@@ -31,7 +28,6 @@ export const signIn = (data) => {
         }
       })
       let userOutput = await userData.json()
-      console.log(userOutput.data)
       dispatch({
         type: 'SIGN_IN',
         payload: userOutput.data
@@ -49,5 +45,25 @@ export const signOut = () => {
     dispatch({
       type: 'SIGN_OUT'
     })
+  }
+}
+
+export const register = (data) => {
+  console.log(data, "ini dari action")
+  return async(dispatch) => {
+    try {
+      const response = await fetch('http://192.168.100.7:5001/register', 
+      { 
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+    }
+    catch(err) {
+      console.log(err)
+    }
   }
 }
