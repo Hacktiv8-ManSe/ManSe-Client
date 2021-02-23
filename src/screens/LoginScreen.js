@@ -34,37 +34,39 @@ function LoginScreen(props) {
         backgroundColor="rgba(0,0,0,1)"
       />
       <ImageBackground
-        source={require("../../assets/images/potrait2.jpg")}
-        resizeMode="contain"
+        source={require("../../assets/images/login.jpg")}
+        resizeMode="cover"
         style={styles.image}
         imageStyle={styles.image_imageStyle} >
-        <View style={styles.group3}>
-          <Text style={styles.login}>Login</Text>
-            <TextInput
-              placeholder=" Email"
-              textBreakStrategy="simple"
-              keyboardType="email-address"
-              style={styles.email}
-              onChangeText={
-                (email) => setEmail(email)
-              }
-              value={email} />
-            <TextInput
-              placeholder=" Password"
-              style={styles.password}
-              secureTextEntry={true}
-              onChangeText={
-                (password) => setPassword(password)
-              }
-              value={password}/>
-            <SubmitButton
-              style={styles.SubmitButton}
-              handleOnPress={handleLogin}/>
-            <TouchableOpacity
-              onPress={() => props.navigation.navigate("RegisterScreen")}
-              style={styles.button}>
-              <Text>Didn't have Account? Click here</Text>
-            </TouchableOpacity>
+        <View style={styles.container}>
+          <View style={styles.group3}>
+            <Text style={styles.login}>Login</Text>
+              <TextInput
+                placeholder=" Email"
+                textBreakStrategy="simple"
+                keyboardType="email-address"
+                style={styles.email}
+                onChangeText={
+                  (email) => setEmail(email)
+                }
+                value={email} />
+              <TextInput
+                placeholder=" Password"
+                style={styles.password}
+                secureTextEntry={true}
+                onChangeText={
+                  (password) => setPassword(password)
+                }
+                value={password}/>
+              <SubmitButton
+                style={styles.SubmitButton}
+                handleOnPress={handleLogin}/>
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate("RegisterScreen")}
+                style={styles.button}>
+                <Text style={styles.notice}>Didn't have Account? Click here</Text>
+              </TouchableOpacity>
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -73,27 +75,29 @@ function LoginScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image: {
-    width: width,
+    width: '100%',
     height: height,
-    // marginTop: -82,
-    // marginLeft: -50
+    justifyContent: "center"
   },
   image_imageStyle: {
-    opacity: 0.57
+    opacity: 0.65
   },
   group3: {
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 268,
     height: 271,
     marginTop: 307,
-    marginLeft: 96
   },
   login: {
-    color: "#121212",
+    color: "#fff",
     fontSize: 40,
-    marginLeft: 84
+    textAlign: 'center'
   },
   email: {
     color: "#121212",
@@ -114,12 +118,17 @@ const styles = StyleSheet.create({
   SubmitButton: {
     width: 268,
     height: 44,
-    marginTop: 22
+    marginTop: 22,
+    backgroundColor: "rgba(255,165,0,0.8)"
   },
   button: {
     alignItems: "center",
     backgroundColor: 'rgba(52, 52, 52, 0)',
     padding: 10
+  },
+  notice: {
+    color: "#fff",
+    textAlign: 'center'
   }
 });
 
