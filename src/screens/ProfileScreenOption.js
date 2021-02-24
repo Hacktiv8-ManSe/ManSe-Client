@@ -14,10 +14,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProfileScreen = (props) => {
   const { user } = useSelector(state => state)
-  useEffect(() => {
-    console.log(user, "dari Profile")
-  }, [])
-  useEffect
 
   const dispatch = useDispatch()
   return (
@@ -75,12 +71,12 @@ const ProfileScreen = (props) => {
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple onPress={() => {}}>
+        {/* <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Icon name="heart-outline" color="#FF6347" size={25}/>
             <Text style={styles.menuItemText}>Your Favorites</Text>
           </View>
-        </TouchableRipple>
+        </TouchableRipple> */}
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Icon name="history" color="#FF6347" size={25}/>
