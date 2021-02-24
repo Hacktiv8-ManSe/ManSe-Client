@@ -16,6 +16,15 @@ export const setClarifaiPredictions = (payload) => {
   }
 }
 
+export const setClarifaiPredictionsSeveralItems = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_CLARIFAI_PREDICTIONS_SEVERAL_ITEMS',
+      payload
+    })
+  }
+}
+
 export const cameraData = (payload) => {
   return (dispatch) => {
     dispatch({

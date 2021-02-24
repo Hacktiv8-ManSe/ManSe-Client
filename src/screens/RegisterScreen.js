@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Dimensions
 } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker'
+// import DateTimePicker from '@react-native-community/datetimepicker'
 import { RadioButton } from 'react-native-paper';
 import SubmitButton from "../components/SubmitButton";
 import { register } from '../store/actions/userAction'

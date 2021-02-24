@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../store/actions/userAction'
+import { setClarifaiPredictionsSeveralItems } from '../store/actions/cameraAction'
 import CardBody from "../components/CardBody";
 import Headers from "../components/Headers";
 
@@ -10,8 +11,11 @@ const { width } = Dimensions.get('screen')
 const ResultsScreen = (props) => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
+  console.log('   >>> this is the response from Store:');
+  console.log(camera.clarifaiPredictionsSeveralItems)
   console.log(camera.clarifaiPredictions)
   console.log(camera.cameraData)
+  console.log('   <<< end of the response from Store');
   return (
     <View style={{
       flex: 1,
@@ -24,6 +28,13 @@ const ResultsScreen = (props) => {
         <ScrollView
           horizontal={false}
         >
+          {
+            camera.clarifaiPredictionsSeveralItems?.map(prediction => {
+              return <View>
+                <Text>{prediction.name}: {prediction.value * 100}%</Text>
+              </View>
+            })
+          }
           {
             camera.cameraData?.map(recipe => {
               return (
