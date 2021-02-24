@@ -1,5 +1,6 @@
 const initialState = {
   clarifaiPredictions: '',
+  clarifaiPredictionsSeveralItems: '',
   photoURI: '',
   cameraData: []
 }
@@ -16,6 +17,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         clarifaiPredictions: payload
+      }
+    case 'SET_CLARIFAI_PREDICTIONS_SEVERAL_ITEMS':
+      return {
+        ...state,
+        clarifaiPredictionsSeveralItems: payload
       }
     case 'SET_DATA_CAMERA':
       return {

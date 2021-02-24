@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
 import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
-import { setPhotoUri, setClarifaiPredictions, cameraData } from '../store/actions/cameraAction'
+import { setPhotoUri, setClarifaiPredictions, cameraData, setClarifaiPredictionsSeveralItems } from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import SplashLoading from '../components/SplashLoading'
@@ -57,8 +57,16 @@ const ScanScreen = () => {
       const responses = await ClarifaiApp.models.predict(FOOD_MODEL, {
         base64: capturedImage.base64
       })
+      // console.log('   >>> this is the response from Clarifai:');
+      // console.log(responses);
+      // console.log('   <<< end of the response from Clarifai:');
+      const ingredients = responses.outputs[0].data.concepts.slice(0,5)
       const { name } = responses.outputs[0].data.concepts[0]
+      dispatch(setClarifaiPredictionsSeveralItems(ingredients))
       dispatch(setClarifaiPredictions(name))
+      // console.log('   >>> this is the response from Clarifai:');
+      // console.log(ingredients);
+      // console.log('   <<< end of the response from Clarifai:');
       // console.log(name, '<<<< food name')
       if (name) {
         const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
