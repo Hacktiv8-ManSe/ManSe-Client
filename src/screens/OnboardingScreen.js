@@ -3,11 +3,11 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Onboarding from 'react-native-onboarding-swiper';
 
-const OnboardingScreen = ({navigation}) => {
+const OnboardingScreen = (props) => {
   return (
       <Onboarding
-      onSkip={() => navigation.replace("Login")}
-      onDone={() => navigation.navigate("Login")}
+      onSkip={() => props.navigation.replace("LoginScreen")}
+      onDone={() => props.navigation.navigate("LoginScreen")}
       pages={[
         {
           backgroundColor: '#a6e4d0',

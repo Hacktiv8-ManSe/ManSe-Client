@@ -5,7 +5,7 @@ import store from './src/store'
 import { Provider } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import SplashLoading from './src/components/SplashLoading'
-import EditScreen from './src/screens/EditScreen';
+import OnboardingScreen from './src/screens/OnboardingScreen';
 import { LogBox } from 'react-native';
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
             ? <BottomNavigator />
             : <AuthNavigator />
       }
-      {/* <EditScreen/> */}
+      {/* <OnboardingScreen/> */}
     </Provider>
   );
 }
