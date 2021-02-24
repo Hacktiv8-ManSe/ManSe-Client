@@ -19,6 +19,8 @@ export const signIn = (data) => {
       })
       let result = await response.json()
       await AsyncStorage.setItem('access_token', result.access_token)
+      let res = await AsyncStorage.getItem('access_token')
+      // console.log(res, "ini access_token")
       const userData = await fetch(`http://192.168.100.7:5001/users/${result._id}`, {
         method: 'GET',
         headers: {
@@ -28,6 +30,7 @@ export const signIn = (data) => {
         }
       })
       let userOutput = await userData.json()
+      // console.log(userOutput.data, "dari userAction")
       dispatch({
         type: 'SIGN_IN',
         payload: userOutput.data
@@ -60,6 +63,70 @@ export const register = (data) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
+      })
+    }
+    catch(err) {
+      console.log(err)
+    }
+  }
+}
+
+export const setProfile = (data) => {
+  
+  return async(dispatch) => {
+    dispatch({
+      type: 'SET_PROFILE',
+      payload: data
+    })
+  }
+}
+
+export const updateProfile = (data) => {
+  // console.log(data, "ini dari update")
+  return async(dispatch) => {
+    try {
+      const access_token = await AsyncStorage.getItem('access_token')
+      const userData = await fetch(`http://192.168.100.7:5001/users/${data.id}`, {
+        method: 'GET',
+        headers: {
+          'access_token': access_token,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      let output = await userData.json()
+      console.log(output, "userData")
+           
+      const this_year = new Date().getFullYear()
+      const age = new Date(output.data.birthday).getFullYear() - this_year
+      const bmr = 10 * output.data.bodystats.weight + 6.25 * output.data.bodystats.height - 5 * +age
+      if(output.data.gender === 'female'){
+        bmr + 161
+      } else {
+        bmr + 5
+      }
+      console.log(bmr)
+
+      const response = await fetch(`http://192.168.100.7:5001/users/${data.id}`, 
+        { 
+          method: 'PUT',
+          headers: {
+            'access_token': access_token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            bmr: bmr,
+            bodystats:{
+              weight: data.weight,
+              height: data.height
+            }
+        })
+      })
+      let result = await response.json()
+      dispatch({
+        type: 'EDIT_PROFILE',
+        payload: result
       })
     }
     catch(err) {

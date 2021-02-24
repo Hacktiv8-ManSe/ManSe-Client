@@ -6,8 +6,10 @@ import { Provider } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import SplashLoading from './src/components/SplashLoading'
 import EditScreen from './src/screens/EditScreen';
+import { LogBox } from 'react-native';
 
 export default function App() {
+  LogBox.ignoreAllLogs()
   const [accessToken, setAccessToken] = useState('')
   const [isLoading, setIsLoading] = useState(true)
   const checkToken = async () => {
