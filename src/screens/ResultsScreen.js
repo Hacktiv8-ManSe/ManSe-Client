@@ -30,9 +30,19 @@ const ResultsScreen = (props) => {
         >
           {
             camera.clarifaiPredictionsSeveralItems?.map(prediction => {
-              return <View>
-                <Text>{prediction.name}: {prediction.value * 100}%</Text>
+              return (
+              <View style={styles.CardBody}>
+                <Text style={styles.predictionStyle}>Prediction Result:</Text>
+                <View style={styles.predictStyle}>
+                  <Text>{prediction.name}:</Text>
+                  <View style={{
+                    flexDirection: 'row'
+                  }}>
+                    <Text>{prediction.value * 100}%</Text>
+                  </View>
+                </View>
               </View>
+              )
             })
           }
           {
@@ -90,5 +100,17 @@ const styles = StyleSheet.create({
     height: 233,
     width: 360,
     marginBottom: 20
+  },
+  predictionStyle: {
+    lineHeight: 16,
+    fontWeight: '500',
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 10
+  },
+  predictStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5
   }
 })
