@@ -2,7 +2,8 @@ import React from "react"
 import { createStackNavigator } from "@react-navigation/stack"
 import {
   LoginScreen,
-  RegisterScreen
+  RegisterScreen,
+  OnboardingScreen
 } from '../screens'
 import { BottomNavigator } from './BottomNavigator'
 import { NavigationContainer } from "@react-navigation/native"
@@ -11,6 +12,7 @@ const AuthStack = createStackNavigator()
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator headerMode="none">
+    <AuthStack.Screen name="OnboardingScreen" component={OnboardingScreen} />
     <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
     <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
   </AuthStack.Navigator>
