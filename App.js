@@ -5,6 +5,7 @@ import store from './src/store'
 import { Provider } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import SplashLoading from './src/components/SplashLoading'
+import EditScreen from './src/screens/EditScreen';
 
 export default function App() {
   const [accessToken, setAccessToken] = useState('')
@@ -30,6 +31,7 @@ export default function App() {
             ? <BottomNavigator />
             : <AuthNavigator />
       }
+      {/* <EditScreen/> */}
     </Provider>
   );
 }
