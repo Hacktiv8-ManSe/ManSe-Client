@@ -6,26 +6,26 @@ import {
   ImageBackground,
   Image,
   TextInput,
+  Button,
   StyleSheet,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker'
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfile, updateProfile } from '../store/actions/userAction';
 
-function EditScreen() {
 
-  const [ name, setName ] = useState('')
-  const [ gender, setGender ] = useState('')
-  const [ email, setEmail ] = useState('')
-  const [ password, setPassword ] = useState('')
+function EditScreen(props) {
+  const dispatch = useDispatch()
+  const { user } = useSelector(state => state)
   const [ height, setHeight ] = useState('')
   const [ weight, setWeight ] = useState('')
-  const [ date, setDate ] = useState('')
+  const [ selectImg, setSelectedImg ] = useState(null)
 
-  const [selectImg, setSelectedImg] = React.useState(null)
-  let openImage = async () =>{
+  let openImage = async () => {
+    
     let permission = await ImagePicker.requestCameraRollPermissionsAsync();
-
 
     if(permission.granted === false){
       return;
@@ -33,39 +33,43 @@ function EditScreen() {
 
     let picker = await ImagePicker.launchImageLibraryAsync()
 
-    if(picker.cancelled ===true){
+    if(picker.cancelled === true){
       return;
     }
     setSelectedImg({localUri:picker.uri})
-    console.log(picker)
+  }
+
+  const handleRegister = () => {
+    let obj = {
+      id: user.userData._id,
+      weight,
+      height
+    }
+    console.log(obj, 'ini dari editScreen')
+    dispatch(updateProfile(obj))
+    props.navigation.navigate("ProfileScreen")
   }
 
   return (
   <View style={styles.container}>
     <View style={{alignItems: 'center'}}>
       <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-        Lisa
+        {user?.userData?.name}
       </Text>
-    </View>
-
-    <View style={styles.action}>
-      <TextInput
-        placeholder="Name"
-        placeholderTextColor="#666666"
-        autoCorrect={false}
-        style={[
-          styles.textInput
-        ]}
-      />
     </View>
     <View style={styles.action}>
       <TextInput
         placeholder="Weight"
         placeholderTextColor="#666666"
+        keyboardType="number-pad"
         autoCorrect={false}
         style={[
           styles.textInput
         ]}
+        onChangeText={
+          (weight) => setWeight(weight)
+        }
+        value={weight}
       />
     </View>
     <View style={styles.action}>
@@ -77,45 +81,29 @@ function EditScreen() {
         style={[
           styles.textInput
         ]}
-      />
-    </View>
-    <View style={styles.action}>
-      <TextInput
-        placeholder="Email"
-        placeholderTextColor="#666666"
-        autoCorrect={false}
-        style={[
-          styles.textInput
-        ]}
-      />
-    </View>
-    <View style={styles.container}>
-        {
-          selectImg !== null ?  (
-            <Image 
-              style={styles.image} 
-              source={{uri:(selectImg.localUri !== null) ? selectImg.localUri : 'https://image.shutterstock.com/image-vector/dots-letter-c-logo-design-260nw-551769190.jpg'}} />
-          ) : <Text>Kosong</Text>
+        onChangeText={
+          (height) => setHeight(height)
         }
-      <TouchableOpacity 
-        onPress={openImage}
-        style={styles.button}>
-        <Text>Click</Text>
-      </TouchableOpacity>
+        value={height}
+      />
     </View>
-    <View style={styles.action}>
+    {/* <View style={styles.action}>
       <TextInput
-        placeholder="Password"
+        placeholder="setImage"
         placeholderTextColor="#666666"
         autoCorrect={false}
         style={[
           styles.textInput
         ]}
       />
-    </View>
-    <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
-      <Text style={styles.panelButtonTitle}>Submit</Text>
-    </TouchableOpacity>
+      <TouchableOpacity 
+        style={styles.button}>
+        <Button title="click here" onPress={openImage}></Button>
+      </TouchableOpacity>
+    </View> */}
+      <TouchableOpacity style={styles.commandButton} onPress={handleRegister}>
+        <Text style={styles.panelButtonTitle}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -125,14 +113,14 @@ export default EditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30
+    marginTop: 30,
   },
   commandButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#FF6347',
+    backgroundColor: 'rgba(80,227,194,1)',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 10
   },
   panel: {
     padding: 20,
@@ -180,6 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
+    alignItems: 'center'
   },
   action: {
     flexDirection: 'row',
@@ -203,11 +192,9 @@ const styles = StyleSheet.create({
     color: '#05375a',
   },
   button:{
-    borderRadius:10,
     backgroundColor:'green',
     justifyContent:'center',
-    alignItems:'center',
-    padding:10
+    alignItems:'center'
   },
   image:{
     width:300,

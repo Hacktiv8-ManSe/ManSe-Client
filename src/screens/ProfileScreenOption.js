@@ -21,10 +21,17 @@ const ProfileScreen = (props) => {
 
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
-          <Avatar.Image 
-            source={require('../../assets/images/profile.jpg')}
-            size={80}
-          />
+          {
+            !user.userPhoto ?
+            <Avatar.Image 
+              source={require('../../assets/images/profile.jpg')}
+              size={80}
+            /> :
+            <Avatar.Image 
+              source={{uri:user.userPhoto}}
+              size={80}
+            />
+          }
           <View style={{marginLeft: 20}}>
             <Title style={[styles.title, {
               marginTop:15,
@@ -71,12 +78,15 @@ const ProfileScreen = (props) => {
       </View>
 
       <View style={styles.menuWrapper}>
-        {/* <TouchableRipple onPress={() => {}}>
+        <TouchableRipple 
+        onPress={() => {
+          props.navigation.navigate("EditScreen")
+        }}>
           <View style={styles.menuItem}>
             <Icon name="heart-outline" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>Your Favorites</Text>
+            <Text style={styles.menuItemText}>Edit</Text>
           </View>
-        </TouchableRipple> */}
+        </TouchableRipple>
         <TouchableRipple onPress={() => {}}>
           <View style={styles.menuItem}>
             <Icon name="history" color="#FF6347" size={25}/>

@@ -11,11 +11,13 @@ const { width } = Dimensions.get('screen')
 const ResultsScreen = (props) => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
+  
   console.log('   >>> this is the response from Store:');
   console.log(camera.clarifaiPredictionsSeveralItems)
   console.log(camera.clarifaiPredictions)
   console.log(camera.cameraData)
   console.log('   <<< end of the response from Store');
+  
   return (
     <View style={{
       flex: 1,
