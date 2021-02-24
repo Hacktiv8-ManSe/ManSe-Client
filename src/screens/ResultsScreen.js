@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../store/actions/userAction'
+import { setClarifaiPredictionsSeveralItems } from '../store/actions/cameraAction'
 import CardBody from "../components/CardBody";
 import Headers from "../components/Headers";
 
@@ -10,8 +11,13 @@ const { width } = Dimensions.get('screen')
 const ResultsScreen = (props) => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
-  // console.log(camera.clarifaiPredictions)
-  // console.log(camera.cameraData)
+  
+  console.log('   >>> this is the response from Store:');
+  console.log(camera.clarifaiPredictionsSeveralItems)
+  console.log(camera.clarifaiPredictions)
+  console.log(camera.cameraData)
+  console.log('   <<< end of the response from Store');
+  
   return (
     <View style={{
       flex: 1,
@@ -24,6 +30,23 @@ const ResultsScreen = (props) => {
         <ScrollView
           horizontal={false}
         >
+          {
+            camera.clarifaiPredictionsSeveralItems?.map(prediction => {
+              return (
+              <View style={styles.CardBody}>
+                <Text style={styles.predictionStyle}>Prediction Result:</Text>
+                <View style={styles.predictStyle}>
+                  <Text>{prediction.name}:</Text>
+                  <View style={{
+                    flexDirection: 'row'
+                  }}>
+                    <Text>{prediction.value * 100}%</Text>
+                  </View>
+                </View>
+              </View>
+              )
+            })
+          }
           {
             camera.cameraData?.map(recipe => {
               return (
@@ -79,5 +102,17 @@ const styles = StyleSheet.create({
     height: 233,
     width: 360,
     marginBottom: 20
+  },
+  predictionStyle: {
+    lineHeight: 16,
+    fontWeight: '500',
+    fontSize: 20,
+    color: 'black',
+    marginBottom: 10
+  },
+  predictStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5
   }
 })
