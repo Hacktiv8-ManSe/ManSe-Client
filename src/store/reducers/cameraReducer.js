@@ -2,12 +2,26 @@ const initialState = {
   clarifaiPredictions: '',
   clarifaiPredictionsSeveralItems: '',
   photoURI: '',
-  cameraData: []
+  cameraData: [],
+
+  // new
+  ingredients: [],
+  food: ''
 }
 
 export default (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
+    case 'SET_INGREDIENTS':
+      return {
+        ...state,
+        ingredients: payload
+      }
+    case 'SET_FOOD':
+      return {
+        ...state,
+        food: payload
+      }
     case 'SET_PHOTO_URI':
       return {
         ...state,
@@ -27,7 +41,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         cameraData: payload
-      } 
+      }
     default:
       return state
   }

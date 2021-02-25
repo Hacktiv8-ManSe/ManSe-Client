@@ -1,25 +1,31 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions
+} from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../store/actions/userAction'
 import { setClarifaiPredictionsSeveralItems } from '../store/actions/cameraAction'
-import CardBody from "../components/CardBody";
-import Headers from "../components/Headers";
+import CardBody from '../components/CardBody'
+import Headers from '../components/Headers'
 
 const { width } = Dimensions.get('screen')
 
-const ResultsScreen = (props) => {
+const ResultsScreen = props => {
   const { camera } = useSelector(state => state)
   const dispatch = useDispatch()
-  
-  console.log('   >>> this is the response from Store:');
+
+  console.log('   >>> this is the response from Store:')
   // console.log(camera.clarifaiPredictionsSeveralItems)
   // console.log(camera.clarifaiPredictions)
   console.log(camera.cameraData)
-  console.log('   <<< end of the response from Store');
-  
-  return (
+  console.log('   <<< end of the response from Store')
 
+  return (
     <View style={styles.container}>
       <View style={styles.cardsWrapper}>
         <Text
@@ -27,21 +33,15 @@ const ResultsScreen = (props) => {
             alignSelf: 'center',
             fontSize: 18,
             fontWeight: 'bold',
-            color: '#333',
-          }}>
+            color: '#333'
+          }}
+        >
           Check This Recipe From Your Foods!
         </Text>
         <ScrollView>
-          {
-          camera.cameraData?.map(recipe => {
-            return (
-              <CardBody
-                key={recipe.id}
-                recipe={recipe}
-              />
-            )
-          })
-          }
+          {camera.cameraData?.map(recipe => {
+            return <CardBody key={recipe.id} recipe={recipe} />
+          })}
         </ScrollView>
       </View>
     </View>
@@ -87,17 +87,17 @@ const ResultsScreen = (props) => {
     //     </ScrollView>
     //   </View>
     // </View>
-      // {/* <Text>ResultsScreen {camera.clarifaiPredictions}</Text>
-      // <TouchableOpacity 
-      //   style={{
-      //     marginTop: 12
-      //   }} 
-      //   onPress={() => {
-      //     props.navigation.navigate("LoginScreen")
-      //     dispatch(signOut())
-      //   }} >
-      //   <Text>Logout</Text>
-      // </TouchableOpacity> */}
+    // {/* <Text>ResultsScreen {camera.clarifaiPredictions}</Text>
+    // <TouchableOpacity
+    //   style={{
+    //     marginTop: 12
+    //   }}
+    //   onPress={() => {
+    //     props.navigation.navigate("LoginScreen")
+    //     dispatch(signOut())
+    //   }} >
+    //   <Text>Logout</Text>
+    // </TouchableOpacity> */}
     // </View>
   )
 }
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   cardsWrapper: {
     marginTop: 20,
     width: '90%',
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   scrollArea: {
     // width: 360,

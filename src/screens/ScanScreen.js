@@ -3,7 +3,14 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Camera } from 'expo-camera'
 import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
-import { setPhotoUri, setClarifaiPredictions, cameraData, setClarifaiPredictionsSeveralItems } from '../store/actions/cameraAction'
+import {
+  setPhotoUri,
+  setClarifaiPredictions,
+  cameraData,
+  setClarifaiPredictionsSeveralItems,
+  setIngredients,
+  setFood
+} from '../store/actions/cameraAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import SplashLoading from '../components/SplashLoading'
@@ -20,7 +27,7 @@ const ScanScreen = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       const { status } = await Camera.requestPermissionsAsync()
       setHasPermission(status === 'granted')
     })()
@@ -34,7 +41,7 @@ const ScanScreen = () => {
   }
 
   if (!isLoading) {
-    return <SplashLoading/>
+    return <SplashLoading />
   }
 
   const takePicture = async () => {
@@ -55,30 +62,91 @@ const ScanScreen = () => {
     })
     try {
       const responses = await ClarifaiApp.models.predict(FOOD_MODEL, {
-        base64: capturedImage.base64
+        // base64: capturedImage.base64
+        url:
+          'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/PizzaHut.jpg?itok=8m3Mf8Bf'
       })
       // console.log('   >>> this is the response from Clarifai:');
       // console.log(responses);
       // console.log('   <<< end of the response from Clarifai:');
-      const ingredients = responses.outputs[0].data.concepts.slice(0,5)
-      const { name } = responses.outputs[0].data.concepts[0]
-      dispatch(setClarifaiPredictionsSeveralItems(ingredients))
-      dispatch(setClarifaiPredictions(name))
+
+      // set clarifai as the mode
+      const result = responses.outputs[0].data.concepts
+      // const ingredients = result.map(el => el.value >= 0.5)
+      const ingredients = result
+      const food = result[0]
+
+      mode === 'Fridge'
+        ? dispatch(setIngredients(ingredients))
+        : dispatch(setFood(food.name))
+
+      if (mode === 'Fridge') {
+        console.log(ingredients)
+        const nameIngredients = ingredients.map(el => el.name)
+        if (ingredients) {
+          console.log(nameIngredients, 'herere')
+          const responses = await fetch(
+            // `https://api.spoonacular.com/recipes/complexSearch?query=${food.name}&addRecipeInformation=true&apiKey=ae1567c7e44b4b748186128672c72144`
+            `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${nameIngredients}&apiKey=ae1567c7e44b4b748186128672c72144`
+          )
+          // const data = await responses.json()
+          // dispatch(cameraData(data))
+          // setIsLoading(true)
+          // navigation.navigate('Results')
+          if (responses.ok) {
+            const data = await responses.json()
+            dispatch(cameraData(data))
+            setIsLoading(true)
+            navigation.navigate('ListIngredients')
+            // navigation.navigate('Results')
+          } else {
+            throw responses
+          }
+        }
+      } else {
+        // hit spoonacular and go to result
+        if (food.name) {
+          console.log(food.name, 'herere')
+          const responses = await fetch(
+            // `https://api.spoonacular.com/recipes/complexSearch?query=${food.name}&addRecipeInformation=true&apiKey=ae1567c7e44b4b748186128672c72144`
+            `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${food.name}&apiKey=ae1567c7e44b4b748186128672c72144`
+          )
+          // const data = await responses.json()
+          // dispatch(cameraData(data))
+          // setIsLoading(true)
+          // navigation.navigate('Results')
+          if (responses.ok) {
+            const data = await responses.json()
+            dispatch(cameraData(data))
+            setIsLoading(true)
+            navigation.navigate('Results')
+          } else {
+            throw responses
+          }
+        }
+      }
+
+      // const { name } = responses.outputs[0].data.concepts[0]
+      // dispatch(setClarifaiPredictionsSeveralItems(result))
+      // dispatch(setClarifaiPredictions(name))
       // console.log('   >>> this is the response from Clarifai:');
       // console.log(ingredients);
       // console.log('   <<< end of the response from Clarifai:');
       // console.log(name, '<<<< food name')
-      if (name) {
-        const responses = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`)
-        if (responses.ok) {
-          const data = await responses.json()
-          dispatch(cameraData(data))
-          setIsLoading(true)
-          navigation.navigate('Results')
-        } else {
-          throw responses
-        }
-      }
+
+      // if (name) {
+      //   const responses = await fetch(
+      //     `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${name}&apiKey=ae1567c7e44b4b748186128672c72144`
+      //   )
+      //   if (responses.ok) {
+      //     const data = await responses.json()
+      //     dispatch(cameraData(data))
+      //     setIsLoading(true)
+      //     navigation.navigate('Results')
+      //   } else {
+      //     throw responses
+      //   }
+      // }
     } catch (error) {
       console.log(error)
     }
@@ -90,54 +158,62 @@ const ScanScreen = () => {
   }
   return (
     <View style={styles.container}>
-      { previewVisible && capturedImage  
-        ? <CameraPreview 
-            photo={capturedImage}
-            savePhoto={savePhoto}
-            retakePicture={retakePicture}
-            mode={mode}/>
-        : (
-            <Camera 
-              style={styles.camera}
-              type={Camera.Constants.Type.back}
-              ref={cameraRef}>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-                marginTop: 20
-              }}>
-                <TouchableOpacity onPress={() => setMode('Food')}>
-                  <Text style={{
-                    fontSize: 30,
-                    color: mode === 'Food' ? '#fafafa' : '#555252'
-                  }}>
-                    Food
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setMode('Fridge')}>
-                  <Text style={{
-                    fontSize: 30,
-                    color: mode === 'Fridge' ? '#fafafa' : '#555252'
-                  }}>
-                    Fridge
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.buttonContainer}>
-                <View style={styles.button}>
-                  <TouchableOpacity
-                    onPress={takePicture}
-                    style={styles.buttonRadius}>
-                    <View style={styles.buttonRadiusInside} >
-                      <View style={styles.buttonRadiusInside2} />
-                    </View>
-                  </TouchableOpacity>
+      {previewVisible && capturedImage ? (
+        <CameraPreview
+          photo={capturedImage}
+          savePhoto={savePhoto}
+          retakePicture={retakePicture}
+          mode={mode}
+        />
+      ) : (
+        <Camera
+          style={styles.camera}
+          type={Camera.Constants.Type.back}
+          ref={cameraRef}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              marginTop: 20
+            }}
+          >
+            <TouchableOpacity onPress={() => setMode('Food')}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: mode === 'Food' ? '#fafafa' : '#555252'
+                }}
+              >
+                Food
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setMode('Fridge')}>
+              <Text
+                style={{
+                  fontSize: 30,
+                  color: mode === 'Fridge' ? '#fafafa' : '#555252'
+                }}
+              >
+                Fridge
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <TouchableOpacity
+                onPress={takePicture}
+                style={styles.buttonRadius}
+              >
+                <View style={styles.buttonRadiusInside}>
+                  <View style={styles.buttonRadiusInside2} />
                 </View>
-              </View>
-            </Camera>
-          )
-      }
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Camera>
+      )}
     </View>
   )
 }
@@ -146,10 +222,10 @@ export default ScanScreen
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   camera: {
-    flex: 1,
+    flex: 1
   },
   buttonContainer: {
     position: 'absolute',
