@@ -4,9 +4,8 @@ import AuthNavigator from './src/routes/AuthNavigator'
 import store from './src/store'
 import { Provider } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import SplashLoading from './src/components/SplashLoading'
-import OnboardingScreen from './src/screens/OnboardingScreen';
 import { LogBox } from 'react-native';
+import AppLoading from 'expo-app-loading'
 
 export default function App() {
   LogBox.ignoreAllLogs()
@@ -28,12 +27,11 @@ export default function App() {
     <Provider store={store}>
       { 
         isLoading
-          ? <SplashLoading />
+          ? <AppLoading />
           : accessToken
             ? <BottomNavigator />
             : <AuthNavigator />
       }
-      {/* <OnboardingScreen/> */}
     </Provider>
   );
 }

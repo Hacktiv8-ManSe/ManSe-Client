@@ -40,12 +40,12 @@ const SplashLoading = () => {
       <View style={styles.contentContainer}>
         <Animated.Image
           style={[styles.image, {opacity: fadeAnim}]}
-          source={require('../../assets/images/logo.png')}
+          source={require('../../assets/images/waiting.png')}
         />
         <Animated.View style={[styles.logoContainer, {marginLeft: moveAnim}]}>
-          <Text style={[styles.logoText]}>L</Text>
+          <Text style={[styles.logoText]}>S</Text>
           <Animated.Text style={[styles.logoText, {opacity: fadeAnim}]}>
-            oading
+           canning....
           </Animated.Text>
         </Animated.View>
       </View>
@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    backgroundColor: '#52b372',
+    backgroundColor: '#a6e4d0',
   },
   logoText: {
-    fontSize: 35,
+    fontSize: 20,
     marginTop: 20,
     color: 'white',
     fontWeight: '700',

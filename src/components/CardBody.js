@@ -5,33 +5,63 @@ import { useNavigation } from '@react-navigation/native'
 function CardBody(props) {
   const navigation = useNavigation()
   return (
-    <TouchableOpacity 
-      style={[styles.container, props.style]} 
+    <TouchableOpacity
       onPress={() => {
         navigation.navigate("Details", {
           recipeId: props.recipe.id
         })
       }}>
-      <Image
-        source={{
-          uri: props.recipe.image
-        }}
-        style={styles.cardItemImagePlace}
-      ></Image>
-      <View style={styles.cardBody}>
-        <View style={styles.bodyContent}>
+      <View style={styles.card}>
+        <View style={styles.cardImgWrapper}>
+          <Image
+            source={{uri: props.recipe.image}}
+            resizeMode="cover"
+            style={styles.cardImg}
+          />
+        </View>
+        <View style={styles.cardInfo}>
+          <Text style={styles.cardTitle}>{props.recipe.title}</Text>
+          {/* <StarRating ratings={4} reviews={99} /> */}
           {
-            props.recipe.readyInMinutes ?
-            <View>
-            <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
-            <Text style={styles.subtitleStyle}>Ready in : { props.recipe.readyInMinutes } minutes</Text>
-            </View>
+            props.recipe.aggregateLikes ?
+            <Text style={styles.cardDetails}>
+              {props.recipe.aggregateLikes} likes
+            </Text>
             :
-            <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+            <Text style={styles.cardDetails}>
+              {props.recipe.likes} likes
+            </Text>
           }
         </View>
       </View>
     </TouchableOpacity>
+    // <TouchableOpacity 
+    //   style={[styles.container, props.style]} 
+    //   onPress={() => {
+    //     navigation.navigate("Details", {
+    //       recipeId: props.recipe.id
+    //     })
+    //   }}>
+    //   <Image
+    //     source={{
+    //       uri: props.recipe.image
+    //     }}
+    //     style={styles.cardItemImagePlace}
+    //   ></Image>
+    //   <View style={styles.cardBody}>
+    //     <View style={styles.bodyContent}>
+    //       {
+    //         props.recipe.readyInMinutes ?
+    //         <View>
+    //         <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+    //         <Text style={styles.subtitleStyle}>Ready in : { props.recipe.readyInMinutes } minutes</Text>
+    //         </View>
+    //         :
+    //         <Text style={styles.titleStyle}>{ props.recipe.title }</Text>
+    //       }
+    //     </View>
+    //   </View>
+    // </TouchableOpacity>
   );
 }
 
@@ -52,34 +82,44 @@ const styles = StyleSheet.create({
     elevation: 3,
     overflow: "hidden"
   },
-  cardItemImagePlace: {
-    backgroundColor: "#ccc",
-    width: "auto",
-    flex: 1
+  card: {
+    height: 100,
+    marginVertical: 10,
+    flexDirection: 'row',
+    shadowColor: '#999',
+    shadowOffset: {width: 0, height: 1},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
   },
-  cardBody: {
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "rgba(0,0,0,0.2)",
-    left: 0,
-    right: 0
+  cardImgWrapper: {
+    flex: 1,
   },
-  bodyContent: {
-    padding: 16,
-    paddingTop: 24,
-    justifyContent: "center"
+  cardImg: {
+    height: '100%',
+    width: '100%',
+    alignSelf: 'center',
+    borderRadius: 8,
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
   },
-  titleStyle: {
-    fontSize: 24,
-    color: "#FFF",
-    paddingBottom: 12
+  cardInfo: {
+    flex: 2,
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderBottomRightRadius: 8,
+    borderTopRightRadius: 8,
+    backgroundColor: '#fff',
   },
-  subtitleStyle: {
-    fontSize: 14,
-    color: "#FFF",
-    lineHeight: 16,
-    opacity: 0.5
-  }
+  cardTitle: {
+    fontWeight: 'bold',
+  },
+  cardDetails: {
+    fontSize: 12,
+    color: '#444',
+  },
 });
 
 export default CardBody;

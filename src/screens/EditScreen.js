@@ -15,7 +15,6 @@ import * as ImagePicker from 'expo-image-picker'
 import { useDispatch, useSelector } from 'react-redux';
 import { setProfile, updateProfile } from '../store/actions/userAction';
 
-
 function EditScreen(props) {
   const dispatch = useDispatch()
   const { user } = useSelector(state => state)
@@ -37,6 +36,7 @@ function EditScreen(props) {
       return;
     }
     setSelectedImg({localUri:picker.uri})
+    dispatch(setProfile(picker.uri))
   }
 
   const handleRegister = () => {
@@ -53,8 +53,8 @@ function EditScreen(props) {
   return (
   <View style={styles.container}>
     <View style={{alignItems: 'center'}}>
-      <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-        {user?.userData?.name}
+      <Text style={{marginBottom: 20, fontSize: 18, fontWeight: 'bold'}}>
+        Account
       </Text>
     </View>
     <View style={styles.action}>
@@ -87,9 +87,9 @@ function EditScreen(props) {
         value={height}
       />
     </View>
-    {/* <View style={styles.action}>
+    <View style={styles.action}>
       <TextInput
-        placeholder="setImage"
+        placeholder="Insert Photo"
         placeholderTextColor="#666666"
         autoCorrect={false}
         style={[
@@ -97,10 +97,11 @@ function EditScreen(props) {
         ]}
       />
       <TouchableOpacity 
-        style={styles.button}>
-        <Button title="click here" onPress={openImage}></Button>
+        style={styles.button}
+        onPress={openImage}>
+        <Icon name="image-plus" color="#777777" size={20}/>
       </TouchableOpacity>
-    </View> */}
+    </View>
       <TouchableOpacity style={styles.commandButton} onPress={handleRegister}>
         <Text style={styles.panelButtonTitle}>Submit</Text>
       </TouchableOpacity>
@@ -113,7 +114,7 @@ export default EditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30,
+    justifyContent:'center'
   },
   commandButton: {
     padding: 15,
@@ -192,9 +193,10 @@ const styles = StyleSheet.create({
     color: '#05375a',
   },
   button:{
-    backgroundColor:'green',
+    backgroundColor:'rgba(255,255,255,0)',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    marginRight: 20
   },
   image:{
     width:300,
