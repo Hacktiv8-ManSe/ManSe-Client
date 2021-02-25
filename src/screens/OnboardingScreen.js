@@ -12,20 +12,20 @@ const OnboardingScreen = (props) => {
         {
           backgroundColor: '#a6e4d0',
           image: <Image source={require('../../assets/images/onboarding-img1.png')} />,
-          title: 'Connect to the World',
-          subtitle: 'A New Way To Connect With The World',
+          title: 'NutriSee',
+          subtitle: 'A Mobile App For a Healthier Lifestyle',
         },
         {
           backgroundColor: '#fdeb93',
           image: <Image source={require('../../assets/images/onboarding-img2.png')} />,
-          title: 'Share Your Favorites',
-          subtitle: 'Share Your Thoughts With Similar Kind of People',
+          title: 'Take a Shot of Your Food',
+          subtitle: 'NutriSee Can Recommend Healthy Recipes Based on the Available Ingredients',
         },
         {
           backgroundColor: '#e9bcbe',
           image: <Image source={require('../../assets/images/onboarding-img3.png')} />,
-          title: 'Become The Star',
-          subtitle: "Let The Spot Light Capture You",
+          title: 'Be Healthy and Happy!',
+          subtitle: "Remember to Keep your Body Functioning at Rest, and Let's Get Started",
         },
       ]}
     />

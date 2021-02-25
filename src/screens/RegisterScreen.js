@@ -36,12 +36,12 @@ function RegisterScreen(props) {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="rgba(7,0,0,1)" />
-      <ImageBackground
+      {/* <ImageBackground
         source={require("../../assets/images/login.jpg")}
         resizeMode="cover"
         style={styles.image3}
         imageStyle={styles.image3_imageStyle}
-      >
+      > */}
         <View style={styles.container}>
           <View style={styles.group3}>
             <Text style={styles.register}>Register</Text>
@@ -99,8 +99,8 @@ function RegisterScreen(props) {
             </View>
             <RadioButton.Group onValueChange={gender => setGender(gender)} value={gender}>
               <Text style={styles.genderTitle}>Gender</Text>
-              <RadioButton.Item style={styles.gender} label="Male" value="male" />
-              <RadioButton.Item style={styles.gender} label="Female" value="female" />
+              <RadioButton.Item label="Male" value="male" />
+              <RadioButton.Item label="Female" value="female" />
             </RadioButton.Group>
             <SubmitButton
               style={styles.SubmitButton}
@@ -114,7 +114,7 @@ function RegisterScreen(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </View>
   );
 }
@@ -122,7 +122,10 @@ function RegisterScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 10
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#a6e4d0"
   },
   image3: {
     width: '100%',

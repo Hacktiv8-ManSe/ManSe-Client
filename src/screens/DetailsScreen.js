@@ -153,6 +153,7 @@ const DetailsScreen = (props) => {
           <Text style={{
             color: 'white',
             fontSize: 30,
+            padding: 15,
             fontWeight: '500',
           }}>
             { recipe.title }

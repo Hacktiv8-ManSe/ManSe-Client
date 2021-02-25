@@ -14,7 +14,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProfileScreen = (props) => {
   const { user } = useSelector(state => state)
-
+  useEffect(() => {
+    console.log(user.userPhoto)
+  }, [user.userPhoto])
   const dispatch = useDispatch()
   return (
     <SafeAreaView style={styles.container}>
@@ -22,13 +24,13 @@ const ProfileScreen = (props) => {
       <View style={styles.userInfoSection}>
         <View style={{flexDirection: 'row', marginTop: 15}}>
           {
-            !user.userPhoto ?
+            user.userPhoto ?
             <Avatar.Image 
-              source={require('../../assets/images/profile.jpg')}
-              size={80}
+            source={{uri:user.userPhoto}}
+            size={80}
             /> :
             <Avatar.Image 
-              source={{uri:user.userPhoto}}
+              source={require('../../assets/images/profile.jpg')}
               size={80}
             />
           }
@@ -37,7 +39,6 @@ const ProfileScreen = (props) => {
               marginTop:15,
               marginBottom: 5,
             }]}>{user?.userData?.name}</Title>
-            <Caption style={styles.caption}>@lisa_z</Caption>
           </View>
         </View>
       </View>
@@ -83,14 +84,8 @@ const ProfileScreen = (props) => {
           props.navigation.navigate("EditScreen")
         }}>
           <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="#FF6347" size={25}/>
+            <Icon name="heart-outline" color="rgba(80,227,194,1)" size={25}/>
             <Text style={styles.menuItemText}>Edit</Text>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
-          <View style={styles.menuItem}>
-            <Icon name="history" color="#FF6347" size={25}/>
-            <Text style={styles.menuItemText}>History</Text>
           </View>
         </TouchableRipple>
         <TouchableRipple 
@@ -99,7 +94,7 @@ const ProfileScreen = (props) => {
             props.navigation.navigate("LoginScreen")
           }}>
           <View style={styles.menuItem}>
-            <Icon name="logout" color="#FF6347" size={25}/>
+            <Icon name="logout" color="rgba(80,227,194,1)" size={25}/>
             <Text style={styles.menuItemText}>Log Out</Text>
           </View>
         </TouchableRipple>

@@ -33,13 +33,12 @@ function LoginScreen(props) {
         barStyle="light-content"
         backgroundColor="rgba(0,0,0,1)"
       />
-      <ImageBackground
+      {/* <ImageBackground
         source={require("../../assets/images/login.jpg")}
         resizeMode="cover"
         style={styles.image}
-        imageStyle={styles.image_imageStyle} >
+        imageStyle={styles.image_imageStyle} > */}
         <View style={styles.container}>
-          <View style={styles.group3}>
             <Text style={styles.login}>Login</Text>
               <TextInput
                 placeholder=" Email"
@@ -66,9 +65,9 @@ function LoginScreen(props) {
                 style={styles.button}>
                 <Text style={styles.notice}>Didn't have Account? Click here</Text>
               </TouchableOpacity>
-          </View>
+          
         </View>
-      </ImageBackground>
+      {/* </ImageBackground> */}
     </View>
   );
 }
@@ -77,7 +76,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: "#a6e4d0"
   },
   image: {
     width: '100%',
