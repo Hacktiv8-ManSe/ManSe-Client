@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Image, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, Text, TouchableOpacity, StatusBar } from "react-native";
 import { useNavigation } from '@react-navigation/native'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function CardBody(props) {
   const navigation = useNavigation()
@@ -24,13 +25,19 @@ function CardBody(props) {
           {/* <StarRating ratings={4} reviews={99} /> */}
           {
             props.recipe.aggregateLikes ?
+            <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Icon name="heart-outline" color="rgba(80,227,194,1)" size={20}/>
             <Text style={styles.cardDetails}>
               {props.recipe.aggregateLikes} likes
             </Text>
+            </View>
             :
+            <View style={{flexDirection: 'row', marginTop: 10}}>
+            <Icon name="heart-outline" color="rgba(80,227,194,1)" size={20}/>
             <Text style={styles.cardDetails}>
               {props.recipe.likes} likes
             </Text>
+            </View>
           }
         </View>
       </View>
@@ -119,6 +126,7 @@ const styles = StyleSheet.create({
   cardDetails: {
     fontSize: 12,
     color: '#444',
+    marginLeft: 5
   },
 });
 

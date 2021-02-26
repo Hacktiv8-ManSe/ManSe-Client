@@ -25,6 +25,11 @@ function HomeScreen(props) {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
       <View style={styles.sliderContainer}>
         <Swiper
           autoplay
@@ -116,6 +121,7 @@ function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white"
   },
   sliderContainer: {
     height: 200,

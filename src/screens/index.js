@@ -7,3 +7,5 @@ export { default as DetailsScreen } from './DetailsScreen'
 export { default as ResultsScreen } from './ResultsScreen'
 export { default as EditScreen } from './EditScreen'
 export { default as OnboardingScreen } from './OnboardingScreen'
+export { default as IngredientList } from './IngredientList'
+

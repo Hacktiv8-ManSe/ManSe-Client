@@ -5,7 +5,8 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../store/actions/userAction'
@@ -27,6 +28,11 @@ const ResultsScreen = props => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
       <View style={styles.cardsWrapper}>
         <Text
           style={{
