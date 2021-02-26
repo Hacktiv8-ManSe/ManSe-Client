@@ -79,15 +79,15 @@ const ProfileScreen = (props) => {
       </View>
 
       <View style={styles.menuWrapper}>
-        <TouchableRipple 
+        {/* <TouchableRipple 
         onPress={() => {
           props.navigation.navigate("EditScreen")
         }}>
           <View style={styles.menuItem}>
-            <Icon name="heart-outline" color="rgba(80,227,194,1)" size={25}/>
+            <Icon name="account" color="rgba(80,227,194,1)" size={25}/>
             <Text style={styles.menuItemText}>Edit</Text>
           </View>
-        </TouchableRipple>
+        </TouchableRipple> */}
         <TouchableRipple 
           onPress={() => {
             dispatch(signOut())

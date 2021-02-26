@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native'
 import { Camera } from 'expo-camera'
 import CameraPreview from '../components/CameraPreview'
 import Clarifai, { FOOD_MODEL } from 'clarifai'
@@ -62,9 +62,9 @@ const ScanScreen = () => {
     })
     try {
       const responses = await ClarifaiApp.models.predict(FOOD_MODEL, {
-        // base64: capturedImage.base64
-        url:
-          'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/PizzaHut.jpg?itok=8m3Mf8Bf'
+        base64: capturedImage.base64
+        // url:
+        //   'https://www.qsrmagazine.com/sites/default/files/styles/story_page/public/PizzaHut.jpg?itok=8m3Mf8Bf'
       })
       // console.log('   >>> this is the response from Clarifai:');
       // console.log(responses);
@@ -97,7 +97,7 @@ const ScanScreen = () => {
             const data = await responses.json()
             dispatch(cameraData(data))
             setIsLoading(true)
-            navigation.navigate('ListIngredients')
+            navigation.navigate('IngredientList')
             // navigation.navigate('Results')
           } else {
             throw responses
@@ -158,6 +158,11 @@ const ScanScreen = () => {
   }
   return (
     <View style={styles.container}>
+      <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
       {previewVisible && capturedImage ? (
         <CameraPreview
           photo={capturedImage}

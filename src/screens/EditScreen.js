@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   StyleSheet,
+  StatusBar
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -52,6 +53,11 @@ function EditScreen(props) {
 
   return (
   <View style={styles.container}>
+    <StatusBar
+        hidden
+        barStyle="light-content"
+        backgroundColor="rgba(0,0,0,1)"
+      />
     <View style={{alignItems: 'center'}}>
       <Text style={{marginBottom: 20, fontSize: 18, fontWeight: 'bold'}}>
         Account
